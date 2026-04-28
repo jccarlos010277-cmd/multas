@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Gestión de Multas | OC-5</title>
+    <title>Gestión de Multas OC-5 | El Resolvito</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     
@@ -11,7 +11,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Poppins', sans-serif; background: #f0f2f5; padding-bottom: 80px; }
         
-        /* Header */
         .header {
             background: linear-gradient(135deg, #1B5E20, #2E7D32);
             color: white;
@@ -24,10 +23,8 @@
         .header h1 i { margin-right: 10px; }
         .header p { font-size: 0.8rem; opacity: 0.9; margin-top: 5px; }
         
-        /* Contenedor principal */
         .container { max-width: 600px; margin: 0 auto; padding: 0 16px; }
         
-        /* Tarjeta del formulario */
         .form-card {
             background: white;
             border-radius: 24px;
@@ -48,9 +45,8 @@
             color: #333;
         }
         
-        .form-group label .required {
-            color: #e53935;
-        }
+        .form-group label .required { color: #e53935; }
+        .form-group label .small-hint { font-weight: normal; font-size: 0.7rem; color: #666; }
         
         .form-group input, 
         .form-group select, 
@@ -74,20 +70,37 @@
             box-shadow: 0 0 0 3px rgba(46,125,50,0.1);
         }
         
-        /* Checkbox personalizado */
+        .codigo-rapido {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .btn-codigo {
+            background: #e8f5e9;
+            border: 1px solid #2E7D32;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #2E7D32;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-codigo:hover {
+            background: #2E7D32;
+            color: white;
+        }
+        
         .checkbox-group {
             display: flex;
             align-items: center;
             gap: 10px;
             margin-top: 5px;
+            margin-bottom: 15px;
         }
-        .checkbox-group input {
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-        }
+        .checkbox-group input { width: 20px; height: 20px; cursor: pointer; }
         
-        /* Botón principal */
         .btn-submit {
             background: linear-gradient(135deg, #25D366, #128C7E);
             color: white;
@@ -102,8 +115,8 @@
             margin-top: 10px;
         }
         .btn-submit:hover { transform: scale(1.02); }
+        .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
         
-        /* Resumen de multa */
         .resumen-card {
             background: #e8f5e9;
             border-radius: 16px;
@@ -115,47 +128,49 @@
         .resumen-card h4 { color: #2E7D32; margin-bottom: 10px; }
         .resumen-card p { font-size: 0.85rem; margin: 5px 0; }
         
-        /* Mensajes de éxito */
         .alert {
             padding: 12px;
             border-radius: 12px;
             margin: 15px 0;
             display: none;
             text-align: center;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            min-width: 250px;
         }
-        .alert-success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
+        .alert-success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .alert-error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .alert-info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
         
-        /* Chatbot flotante */
+        .sync-status { font-size: 0.7rem; text-align: center; margin-top: 10px; color: #666; }
+        
         .chat-btn {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #1B5E20, #2E7D32);
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             cursor: pointer;
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
             z-index: 1000;
             transition: transform 0.2s;
+            overflow: hidden;
+            border: 3px solid white;
         }
         .chat-btn:hover { transform: scale(1.05); }
-        .chat-btn i { color: white; font-size: 28px; }
+        .chat-btn img { width: 100%; height: 100%; object-fit: cover; }
         
         .chat-window {
             position: fixed;
-            bottom: 90px;
+            bottom: 100px;
             right: 20px;
-            width: 350px;
+            width: 380px;
             max-width: calc(100vw - 40px);
-            height: 500px;
+            height: 550px;
             background: white;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
@@ -167,22 +182,30 @@
         .chat-window.open { display: flex; }
         
         .chat-header {
-            background: linear-gradient(135deg, #1B5E20, #2E7D32);
+            background: linear-gradient(135deg, #075E54, #128C7E);
             color: white;
             padding: 12px 16px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
-        .chat-header i { font-size: 24px; }
-        .chat-header h4 { flex: 1; font-size: 1rem; }
+        .chat-header img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+        .chat-header-info { flex: 1; }
+        .chat-header-info h4 { font-size: 1rem; margin: 0; }
+        .chat-header-info p { font-size: 0.7rem; margin: 0; opacity: 0.8; }
         .close-chat { background: none; border: none; color: white; font-size: 24px; cursor: pointer; }
         
         .chat-messages {
             flex: 1;
             overflow-y: auto;
             padding: 12px;
-            background: #f5f5f5;
+            background: #ECE5DD;
         }
         
         .message {
@@ -194,7 +217,7 @@
         .message.user { align-items: flex-end; }
         
         .message-bubble {
-            max-width: 80%;
+            max-width: 85%;
             padding: 10px 14px;
             border-radius: 18px;
             font-size: 0.85rem;
@@ -205,10 +228,28 @@
             color: #333;
         }
         .message.user .message-bubble {
-            background: #2E7D32;
-            color: white;
+            background: #DCF8C6;
+            color: #1F2937;
             border-bottom-right-radius: 4px;
         }
+        
+        .quick-replies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+        .quick-reply-btn {
+            background: #e8f5e9;
+            border: 1px solid #2E7D32;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            color: #2E7D32;
+            cursor: pointer;
+        }
+        .quick-reply-btn:hover { background: #2E7D32; color: white; }
         
         .chat-input-area {
             display: flex;
@@ -225,7 +266,7 @@
             font-family: 'Poppins', sans-serif;
         }
         .chat-input-area button {
-            background: #2E7D32;
+            background: #128C7E;
             border: none;
             width: 40px;
             height: 40px;
@@ -237,6 +278,8 @@
         @media (max-width: 480px) {
             .form-card { padding: 16px; }
             .form-group label { font-size: 0.8rem; }
+            .alert { width: 90%; font-size: 0.8rem; }
+            .chat-window { width: calc(100vw - 40px); height: 500px; right: 20px; bottom: 90px; }
         }
     </style>
 </head>
@@ -250,50 +293,61 @@
 <div class="container">
     <div class="form-card">
         <form id="multaForm">
-            <!-- Fila 1: Fecha y Código -->
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
                 <div class="form-group">
                     <label>📅 Fecha <span class="required">*</span></label>
                     <input type="date" id="fecha" required>
                 </div>
                 <div class="form-group">
-                    <label>🎫 Código talón</label>
-                    <input type="text" id="codigoTalon" placeholder="Código">
+                    <label>🎫 Código talón <span class="small-hint">(máx 8 caracteres)</span></label>
+                    <input type="text" id="codigoTalon" maxlength="8" placeholder="Ej: CB001379">
+                    <div class="codigo-rapido">
+                        <button type="button" class="btn-codigo" data-codigo="CB001379">CB001379</button>
+                        <button type="button" class="btn-codigo" data-codigo="CB002145">CB002145</button>
+                        <button type="button" class="btn-codigo" data-codigo="CB003678">CB003678</button>
+                        <button type="button" class="btn-codigo" data-codigo="CB004901">CB004901</button>
+                    </div>
                 </div>
             </div>
             
-            <!-- Talón viejo checkbox -->
             <div class="checkbox-group">
                 <input type="checkbox" id="talonViejo">
                 <label>📌 Talón viejo (código manual)</label>
             </div>
             
-            <!-- Inspector (quién carga la multa) -->
             <div class="form-group">
                 <label>👮 Inspector <span class="required">*</span></label>
                 <select id="inspector" required>
                     <option value="">Seleccionar inspector</option>
-                    <option>Pedro Rodríguez</option>
-                    <option>María González</option>
-                    <option>Carlos Fernández</option>
-                    <option>Ana Martínez</option>
+                    <option>Yenni Covarrubia</option>
+                    <option>Mae</option>
+                    <option>Maritza</option>
+                    <option>Miriam</option>
+                    <option>Dallami</option>
+                    <option>Adiuska</option>
+                    <option>Zaida</option>
+                    <option>Gerter</option>
+                    <option>Rolando</option>
+                    <option>Emelina</option>
+                    <option>Mari</option>
+                    <option>Ovidio</option>
+                    <option>Joan</option>
+                    <option>Rosita</option>
+                    <option>Yeni</option>
                 </select>
             </div>
             
-            <!-- Decreto/Ley/Resolución -->
             <div class="form-group">
                 <label>⚖️ Decreto / Ley / Resolución <span class="required">*</span></label>
                 <select id="decreto" required>
                     <option value="">Seleccionar</option>
-                    <option>Decreto Ley 272</option>
-                    <option>Ley 88</option>
-                    <option>Resolución 45</option>
-                    <option>Decreto 123</option>
-                    <option>Ley 142</option>
+                    <option value="91">Decreto Ley 91</option>
+                    <option value="272">Decreto Ley 272</option>
+                    <option value="18">Ley 18</option>
+                    <option value="87">Resolución 87</option>
                 </select>
             </div>
             
-            <!-- Artículo e Inciso -->
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
                 <div class="form-group">
                     <label>📑 Artículo</label>
@@ -305,7 +359,6 @@
                 </div>
             </div>
             
-            <!-- Cuantía -->
             <div class="form-group">
                 <label>💰 Cuantía (CUP) <span class="required">*</span></label>
                 <select id="cuantia" required>
@@ -318,7 +371,6 @@
                 </select>
             </div>
             
-            <!-- Datos de la persona -->
             <div class="form-group">
                 <label>👤 Nombre completo <span class="required">*</span></label>
                 <input type="text" id="nombre" required placeholder="Nombre y apellidos">
@@ -329,7 +381,6 @@
                 <input type="text" id="ci" required placeholder="Ej: 88010112345">
             </div>
             
-            <!-- Municipio -->
             <div class="form-group">
                 <label>🏙️ Municipio <span class="required">*</span></label>
                 <select id="municipio" required>
@@ -350,7 +401,6 @@
                 </select>
             </div>
             
-            <!-- Información adicional -->
             <div class="form-group">
                 <label>📝 Observaciones</label>
                 <textarea id="observaciones" rows="2" placeholder="Información adicional sobre la multa..."></textarea>
@@ -361,36 +411,98 @@
                 <div id="resumenTexto"></div>
             </div>
             
-            <button type="submit" class="btn-submit">
+            <button type="submit" class="btn-submit" id="submitBtn">
                 <i class="fas fa-save"></i> Guardar multa
             </button>
         </form>
         
-        <div id="alertMsg" class="alert alert-success"></div>
+        <div class="sync-status" id="syncStatus">
+            <i class="fas fa-cloud-upload-alt"></i> Los datos se guardan localmente
+        </div>
     </div>
 </div>
 
 <!-- Botón del chatbot -->
 <div class="chat-btn" id="chatBtn">
-    <i class="fas fa-robot"></i>
+    <img id="chatAvatarBtn" src="https://i.postimg.cc/fRxPW9R2/avatar-mary.webp" alt="Asistente">
 </div>
 
 <div class="chat-window" id="chatWindow">
-    <div class="chat-header">
-        <i class="fas fa-robot"></i>
-        <h4>Asistente Multas</h4>
+    <div class="chat-header" id="chatHeader">
+        <img id="chatAvatarHeader" src="https://i.postimg.cc/fRxPW9R2/avatar-mary.webp" alt="Avatar">
+        <div class="chat-header-info">
+            <h4 id="chatName">Mary</h4>
+            <p id="chatStatus">🤖 Asistente de multas</p>
+        </div>
         <button class="close-chat" id="closeChatBtn">&times;</button>
     </div>
     <div class="chat-messages" id="chatMessages"></div>
     <div class="chat-input-area">
-        <input type="text" id="chatInput" placeholder="Escribe tu pregunta...">
+        <input type="text" id="chatInput" placeholder="Escribe tu mensaje...">
         <button id="sendChatBtn"><i class="fas fa-paper-plane"></i></button>
     </div>
 </div>
 
+<div id="alertMsg" class="alert"></div>
+
 <script>
-    // ========== DATOS PREDEFINIDOS ==========
+    // ========== AVATARES ==========
+    const avatares = [
+        { nombre: "Mary", img: "https://i.postimg.cc/fRxPW9R2/avatar-mary.webp" },
+        { nombre: "Betty", img: "https://i.postimg.cc/3xgqrvxb/avatar-betty.webp" }
+    ];
+    
+    let avatarActual = avatares[0];
+    
+    function cambiarAvatar() {
+        const randomIndex = Math.floor(Math.random() * avatares.length);
+        avatarActual = avatares[randomIndex];
+        const avatarImg = document.getElementById('chatAvatarBtn');
+        const avatarHeader = document.getElementById('chatAvatarHeader');
+        const chatName = document.getElementById('chatName');
+        if (avatarImg) avatarImg.src = avatarActual.img;
+        if (avatarHeader) avatarHeader.src = avatarActual.img;
+        if (chatName) chatName.textContent = avatarActual.nombre;
+    }
+    
+    // ========== LISTA DE INSPECTORES ==========
+    const inspectores = [
+        "Yenni Covarrubia", "Mae", "Maritza", "Miriam", "Dallami", "Adiuska", 
+        "Zaida", "Gerter", "Rolando", "Emelina", "Mari", "Ovidio", "Joan", "Rosita", "Yeni"
+    ];
+    
+    let inspectorActual = "";
+    let ultimoInspector = localStorage.getItem('ultimoInspector') || "";
+    
+    // ========== MENSAJES ==========
+    const mensajesAnimo = [
+        "¡Ánimo! Ya casi termina la jornada. 💪",
+        "Hoy has trabajado duro, tómate un respiro. ☕",
+        "Recuerda que cada multa ayuda a mantener el orden. ¡Sigue así! 🌟",
+        "Un día más, un paso más cerca de la meta. ¡Tú puedes! ✨",
+        "¿Agotada/o? Respira hondo, que lo estás haciendo genial. 💖",
+        "El trabajo de inspector es muy importante. ¡Gracias por tu labor! 🏆",
+        "Si necesitas ayuda con alguna multa complicada, aquí estoy. 📋"
+    ];
+    
+    const mensajesDespedida = [
+        "¡Hasta luego! Descansa y nos vemos mañana. 👋",
+        "Que tengas un excelente descanso. ¡Nos leemos! 💤",
+        "Gracias por usar el sistema. ¡Cuídate mucho! 🌈",
+        "Hasta la próxima multa. 😊",
+        "¡Buenas noches! Que termines bien tu jornada. 🌙"
+    ];
+    
+    // ========== DATOS LOCALES ==========
     let multasGuardadas = JSON.parse(localStorage.getItem('multas')) || [];
+    
+    // ========== BOTONES DE CÓDIGO ==========
+    document.querySelectorAll('.btn-codigo').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const codigo = btn.getAttribute('data-codigo');
+            document.getElementById('codigoTalon').value = codigo;
+        });
+    });
     
     // ========== ACTUALIZAR RESUMEN ==========
     function actualizarResumen() {
@@ -398,7 +510,8 @@
         const resumenTexto = document.getElementById('resumenTexto');
         
         const fecha = document.getElementById('fecha').value;
-        const decreto = document.getElementById('decreto').value;
+        const decretoSelect = document.getElementById('decreto');
+        const decretoTexto = decretoSelect.options[decretoSelect.selectedIndex]?.text || '';
         const articulo = document.getElementById('articulo').value;
         const inciso = document.getElementById('inciso').value;
         const cuantia = document.getElementById('cuantia').value;
@@ -407,11 +520,11 @@
         const municipio = document.getElementById('municipio').value;
         const inspector = document.getElementById('inspector').value;
         
-        if (fecha && decreto && cuantia && nombre && ci && municipio && inspector) {
+        if (fecha && decretoSelect.value && cuantia && nombre && ci && municipio && inspector) {
             resumenTexto.innerHTML = `
                 📅 Fecha: ${fecha}<br>
                 👮 Inspector: ${inspector}<br>
-                ⚖️ ${decreto} ${articulo ? `Art. ${articulo}` : ''} ${inciso ? `Inciso ${inciso}` : ''}<br>
+                ⚖️ ${decretoTexto} ${articulo ? `Art. ${articulo}` : ''} ${inciso ? `Inciso ${inciso}` : ''}<br>
                 💰 ${parseInt(cuantia).toLocaleString()} CUP<br>
                 👤 ${nombre}<br>
                 🆔 ${ci}<br>
@@ -423,15 +536,33 @@
         }
     }
     
-    // Escuchar cambios en el formulario
     document.querySelectorAll('#multaForm input, #multaForm select, #multaForm textarea').forEach(el => {
         el.addEventListener('input', actualizarResumen);
         el.addEventListener('change', actualizarResumen);
     });
     
+    // ========== MOSTRAR ALERTA ==========
+    function mostrarAlerta(msg, tipo) {
+        const alertDiv = document.getElementById('alertMsg');
+        alertDiv.textContent = msg;
+        alertDiv.className = `alert alert-${tipo}`;
+        alertDiv.style.display = 'block';
+        setTimeout(() => {
+            alertDiv.style.opacity = '0';
+            setTimeout(() => {
+                alertDiv.style.display = 'none';
+                alertDiv.style.opacity = '1';
+            }, 300);
+        }, 3000);
+    }
+    
     // ========== GUARDAR MULTA ==========
-    document.getElementById('multaForm').addEventListener('submit', function(e) {
+    document.getElementById('multaForm').addEventListener('submit', async function(e) {
         e.preventDefault();
+        
+        const submitBtn = document.getElementById('submitBtn');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
         
         const multa = {
             id: Date.now(),
@@ -439,7 +570,8 @@
             codigoTalon: document.getElementById('codigoTalon').value || 'No especificado',
             talonViejo: document.getElementById('talonViejo').checked,
             inspector: document.getElementById('inspector').value,
-            decreto: document.getElementById('decreto').value,
+            decreto: document.getElementById('decreto').options[document.getElementById('decreto').selectedIndex]?.text || '',
+            decretoValor: document.getElementById('decreto').value,
             articulo: document.getElementById('articulo').value || '-',
             inciso: document.getElementById('inciso').value || '-',
             cuantia: parseInt(document.getElementById('cuantia').value),
@@ -450,75 +582,62 @@
             fechaRegistro: new Date().toISOString()
         };
         
-        // Validar
-        if (!multa.fecha || !multa.inspector || !multa.decreto || !multa.cuantia || !multa.nombre || !multa.ci || !multa.municipio) {
+        if (!multa.fecha || !multa.inspector || !multa.decretoValor || !multa.cuantia || !multa.nombre || !multa.ci || !multa.municipio) {
             mostrarAlerta('❌ Completa todos los campos obligatorios', 'error');
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fas fa-save"></i> Guardar multa';
             return;
         }
         
-        // Guardar
         multasGuardadas.push(multa);
         localStorage.setItem('multas', JSON.stringify(multasGuardadas));
         
-        // Mostrar éxito
-        mostrarAlerta(`✅ Multa guardada correctamente para ${multa.nombre}`, 'success');
+        mostrarAlerta(`✅ Multa guardada para ${multa.nombre}`, 'success');
         
-        // Preparar para enviar a Google Sheets (opcional)
-        prepararParaEnviar(multa);
-        
-        // Limpiar campos excepto inspector y fecha
         document.getElementById('codigoTalon').value = '';
         document.getElementById('talonViejo').checked = false;
-        document.getElementById('decreto').value = '';
         document.getElementById('articulo').value = '';
         document.getElementById('inciso').value = '';
         document.getElementById('cuantia').value = '';
         document.getElementById('nombre').value = '';
         document.getElementById('ci').value = '';
-        document.getElementById('municipio').value = '';
         document.getElementById('observaciones').value = '';
         document.getElementById('fecha').value = new Date().toISOString().split('T')[0];
         
         actualizarResumen();
+        
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="fas fa-save"></i> Guardar multa';
     });
     
-    function mostrarAlerta(msg, tipo) {
-        const alertDiv = document.getElementById('alertMsg');
-        alertDiv.textContent = msg;
-        alertDiv.className = `alert alert-${tipo === 'success' ? 'success' : 'danger'}`;
-        alertDiv.style.display = 'block';
-        setTimeout(() => { alertDiv.style.display = 'none'; }, 3000);
-    }
-    
-    // ========== PREPARAR PARA ENVIAR A GOOGLE SHEETS ==========
-    function prepararParaEnviar(multa) {
-        // Guardar en localStorage para exportar después
-        let pendientes = JSON.parse(localStorage.getItem('multasPendientesEnvio') || '[]');
-        pendientes.push(multa);
-        localStorage.setItem('multasPendientesEnvio', JSON.stringify(pendientes));
+    // ========== FUNCIONES DEL CHATBOT ==========
+    function agregarMensaje(texto, esUsuario = false, respuestasRapidas = null) {
+        const chatMessages = document.getElementById('chatMessages');
+        const div = document.createElement('div');
+        div.className = `message ${esUsuario ? 'user' : 'bot'}`;
+        div.innerHTML = `<div class="message-bubble">${texto}</div>`;
+        chatMessages.appendChild(div);
         
-        console.log('Multa lista para sincronizar:', multa);
-        
-        // Si quieres enviar automáticamente a Google Sheets (requiere configuración)
-        if (false) { // Cambiar a true cuando tengas el Web App URL
-            enviarAGoogleSheets(multa);
+        if (respuestasRapidas && !esUsuario) {
+            const repliesDiv = document.createElement('div');
+            repliesDiv.className = 'quick-replies';
+            respuestasRapidas.forEach(reply => {
+                const btn = document.createElement('button');
+                btn.className = 'quick-reply-btn';
+                btn.textContent = reply;
+                btn.onclick = () => {
+                    agregarMensaje(reply, true);
+                    procesarMensaje(reply);
+                };
+                repliesDiv.appendChild(btn);
+            });
+            chatMessages.appendChild(repliesDiv);
         }
-    }
-    
-    function enviarAGoogleSheets(multa) {
-        // Esta función requiere un Web App de Google Apps Script
-        // URL ejemplo: const WEB_APP_URL = "https://script.google.com/macros/s/ID/exec";
-        const WEB_APP_URL = "https://script.google.com/macros/s/TU_ID_AQUI/exec";
         
-        fetch(WEB_APP_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            body: JSON.stringify(multa)
-        }).catch(e => console.log('No se pudo enviar a Google Sheets'));
+        chatMessages.scrollTop = chatMessages.scrollHeight;
     }
     
-    // ========== EXPORTAR MULTAS ==========
-    window.exportarMultas = function() {
+    function exportarMultas() {
         const dataStr = JSON.stringify(multasGuardadas, null, 2);
         const blob = new Blob([dataStr], {type: 'application/json'});
         const url = URL.createObjectURL(blob);
@@ -528,95 +647,156 @@
         a.click();
         URL.revokeObjectURL(url);
         mostrarAlerta('📁 Multas exportadas a JSON', 'success');
-    };
-    
-    // ========== CHATBOT PARA AYUDAR CON MULTAS ==========
-    let chatMessages = document.getElementById('chatMessages');
-    let chatInput = document.getElementById('chatInput');
-    
-    function addChatMessage(text, isUser = false) {
-        const div = document.createElement('div');
-        div.className = `message ${isUser ? 'user' : 'bot'}`;
-        div.innerHTML = `<div class="message-bubble">${text}</div>`;
-        chatMessages.appendChild(div);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
     }
     
-    async function botResponder(pregunta) {
-        const p = pregunta.toLowerCase();
+    // Función principal del chatbot
+    function procesarMensaje(mensaje) {
+        const msg = mensaje.toLowerCase().trim();
+        let respuesta = "";
         
-        if (p.includes('hola') || p.includes('buenas')) {
-            return "¡Hola! Soy tu asistente para el sistema de multas. ¿En qué puedo ayudarte?\n\nPuedo ayudarte con:\n• 📝 Cómo llenar el formulario\n• ⚖️ Decretos y leyes disponibles\n• 📊 Ver estadísticas de multas\n• 💰 Calcular cuantías";
+        // Verificar si el mensaje contiene un nombre de inspector
+        let nombreEncontrado = null;
+        for (let i = 0; i < inspectores.length; i++) {
+            if (msg.includes(inspectores[i].toLowerCase())) {
+                nombreEncontrado = inspectores[i];
+                break;
+            }
         }
-        else if (p.includes('formulario') || p.includes('como llenar')) {
-            return "📋 Para llenar el formulario:\n1. Fecha actual (selecciona en el calendario)\n2. Inspector (tu nombre)\n3. Decreto/Ley que aplica\n4. Cuantía de la multa\n5. Nombre y CI del infractor\n6. Municipio donde ocurrió\n\n¿Necesitas ayuda con algún campo específico?";
+        
+        if (nombreEncontrado && !inspectorActual) {
+            inspectorActual = nombreEncontrado;
+            localStorage.setItem('ultimoInspector', inspectorActual);
+            document.getElementById('inspector').value = inspectorActual;
+            respuesta = `¡Hola ${inspectorActual}! 👋 Soy ${avatarActual.nombre}, tu asistente.\n\n¿En qué puedo ayudarte hoy? Puedes decir "ayuda" para ver todos los comandos.`;
+            agregarMensaje(respuesta, false);
+            return;
         }
-        else if (p.includes('decreto') || p.includes('ley')) {
-            return "⚖️ Los decretos disponibles son:\n• Decreto Ley 272\n• Ley 88\n• Resolución 45\n• Decreto 123\n• Ley 142\n\nSi falta alguno, pídele al administrador que lo agregue.";
+        
+        // Comandos del chatbot
+        if (msg.includes('hola') || msg.includes('buenas') || msg.includes('saludos')) {
+            if (inspectorActual) {
+                respuesta = `¡Hola de nuevo, ${inspectorActual}! ¿Cómo va tu día? ¿Necesitas ayuda con alguna multa?`;
+            } else {
+                respuesta = `¡Hola! Soy ${avatarActual.nombre}, tu asistente de multas. ¿Cómo te llamas? (Puedes decirme tu nombre)`;
+            }
         }
-        else if (p.includes('cuantia') || p.includes('precio') || p.includes('costo')) {
-            return "💰 Las cuantías disponibles son:\n• 500 CUP\n• 1,000 CUP\n• 2,500 CUP\n• 5,000 CUP\n• 10,000 CUP\n\n¿Necesitas calcular una multa específica?";
+        else if (msg.includes('ayuda') || msg.includes('que puedes hacer') || msg.includes('comandos')) {
+            respuesta = "🤖 **Comandos disponibles:**\n\n• **hola** - Saludo\n• **registrar multa** - Guía paso a paso\n• **estadisticas** - Ver total de multas\n• **exportar** - Descargar datos\n• **animo** - Mensaje motivador\n• **adios** - Cerrar conversación\n\n¿Qué deseas hacer?";
         }
-        else if (p.includes('habana vieja') || p.includes('municipio')) {
-            return "🏙️ Los municipios disponibles son:\nHabana Vieja, Centro Habana, Cerro, Guanabacoa, 10 de Octubre, Playa, Plaza, Marianao, La Lisa, Boyeros, Arroyo Naranjo, Cotorro, San Miguel del Padrón.\n\nLas multas de Habana Vieja se separan automáticamente.";
+        else if (msg.includes('registrar multa') || msg.includes('nueva multa') || msg.includes('crear multa')) {
+            respuesta = "📋 **Guía rápida para registrar una multa:**\n\n1. Completa todos los campos del formulario\n2. El código del talón tiene máximo 8 caracteres\n3. Selecciona el decreto/ley (91, 272, 18, 87)\n4. Indica artículo e inciso (opcional)\n5. Selecciona la cuantía\n6. Escribe nombre y CI del infractor\n7. Selecciona el municipio\n8. Haz clic en 'Guardar multa'\n\n¿Necesitas ayuda con algún campo específico?";
         }
-        else if (p.includes('estadistica') || p.includes('cuantas') || p.includes('total')) {
+        else if (msg.includes('estadisticas') || msg.includes('cuantas multas') || msg.includes('total')) {
             const total = multasGuardadas.length;
-            const porMunicipio = {};
-            multasGuardadas.forEach(m => { porMunicipio[m.municipio] = (porMunicipio[m.municipio] || 0) + 1; });
-            const hvCount = porMunicipio['Habana Vieja'] || 0;
-            return `📊 Estadísticas:\n• Total de multas: ${total}\n• Habana Vieja: ${hvCount}\n• Otros municipios: ${total - hvCount}\n\n¿Quieres exportar los datos?`;
+            const misMultas = inspectorActual ? multasGuardadas.filter(m => m.inspector === inspectorActual).length : 0;
+            respuesta = `📊 **Estadísticas:**\n\n• Total de multas registradas: ${total}\n${inspectorActual ? `• Multas registradas por ${inspectorActual}: ${misMultas}` : ''}\n\n¡Sigue así! 💪`;
         }
-        else if (p.includes('exportar') || p.includes('descargar')) {
+        else if (msg.includes('exportar')) {
             exportarMultas();
-            return "✅ Exportando multas... Revisa la carpeta de descargas.";
+            respuesta = "✅ Exportando multas... El archivo se descargará automáticamente.";
         }
-        else if (p.includes('talon viejo')) {
-            return "📌 El talón viejo es un checkbox que activas cuando el talón físico no tiene código legible. Al activarlo, el sistema permite ingresar el código manualmente.";
+        else if (msg.includes('animo') || msg.includes('cansado') || msg.includes('agotado') || msg.includes('harto')) {
+            respuesta = mensajesAnimo[Math.floor(Math.random() * mensajesAnimo.length)];
         }
-        else if (p.includes('ayuda') || p.includes('comandos')) {
-            return "🤖 Comandos disponibles:\n• formulario - Cómo llenar\n• decretos - Lista de leyes\n• cuantias - Precios disponibles\n• municipios - Lista completa\n• estadisticas - Ver totales\n• exportar - Descargar datos\n• talon viejo - Explicación";
+        else if (msg.includes('gracias')) {
+            respuesta = "¡De nada! Para eso estoy aquí. ¿Necesitas algo más?";
+        }
+        else if (msg.includes('adios') || msg.includes('chao') || msg.includes('hasta luego') || msg.includes('salir')) {
+            respuesta = mensajesDespedida[Math.floor(Math.random() * mensajesDespedida.length)];
+            agregarMensaje(respuesta, false);
+            setTimeout(() => {
+                document.getElementById('chatWindow').classList.remove('open');
+            }, 2000);
+            return;
+        }
+        else if (msg.includes('codigo') || msg.includes('talon')) {
+            respuesta = "📌 El código del talón debe tener máximo 8 caracteres. Ejemplos: CB001379, CB002145. También puedes usar los botones rápidos debajo del campo.";
+        }
+        else if (msg.includes('decreto') || msg.includes('ley')) {
+            respuesta = "⚖️ Los decretos disponibles son: 91, 272, 18 y 87. Cada uno corresponde a una normativa diferente. ¿Cuál necesitas?";
+        }
+        else if (msg.includes('municipio')) {
+            respuesta = "🏙️ Municipios disponibles: Habana Vieja, Centro Habana, Cerro, Guanabacoa, 10 de Octubre, Playa, Plaza, Marianao, La Lisa, Boyeros, Arroyo Naranjo, Cotorro, San Miguel del Padrón.";
         }
         else {
-            return "No entendí tu pregunta. ¿Puedes reformularla?\n\nEscribe 'ayuda' para ver los comandos disponibles.";
+            if (inspectorActual) {
+                respuesta = `No entendí bien "${mensaje}". ¿Puedes repetirlo?\n\nEscribe "ayuda" para ver los comandos disponibles, ${inspectorActual}.`;
+            } else {
+                respuesta = `No entendí tu mensaje. ¿Puedes decirme tu nombre? O escribe "ayuda" para ver qué puedo hacer.`;
+            }
         }
+        
+        agregarMensaje(respuesta, false);
     }
     
-    async function sendChatMessage() {
-        const msg = chatInput.value.trim();
+    function enviarMensaje() {
+        const input = document.getElementById('chatInput');
+        const msg = input.value.trim();
         if (!msg) return;
         
-        addChatMessage(msg, true);
-        chatInput.value = '';
-        
-        const respuesta = await botResponder(msg);
-        setTimeout(() => addChatMessage(respuesta, false), 300);
+        agregarMensaje(msg, true);
+        input.value = '';
+        procesarMensaje(msg);
     }
     
-    // Chat UI
+    // ========== INICIALIZAR CHAT ==========
+    function inicializarChat() {
+        cambiarAvatar();
+        
+        if (ultimoInspector) {
+            inspectorActual = ultimoInspector;
+            document.getElementById('inspector').value = ultimoInspector;
+        }
+        
+        agregarMensaje(`👋 ¡Hola! Soy ${avatarActual.nombre}, tu asistente de multas.${inspectorActual ? `\n\n¡Hola de nuevo, ${inspectorActual}!` : '\n\n¿Cómo te llamas? (Dime tu nombre)'}`, false, ["Ayuda", "Registrar multa", "Estadísticas"]);
+    }
+    
+    // ========== EVENTOS ==========
+    document.getElementById('fecha').value = new Date().toISOString().split('T')[0];
+    
+    if (ultimoInspector) {
+        inspectorActual = ultimoInspector;
+        document.getElementById('inspector').value = ultimoInspector;
+    }
+    
+    // Eventos del chat
     const chatBtn = document.getElementById('chatBtn');
     const chatWindow = document.getElementById('chatWindow');
     const closeChatBtn = document.getElementById('closeChatBtn');
+    const sendChatBtn = document.getElementById('sendChatBtn');
+    const chatInput = document.getElementById('chatInput');
     
     chatBtn.addEventListener('click', () => {
-        chatWindow.classList.toggle('open');
-        if (chatMessages.children.length === 0) {
-            setTimeout(() => {
-                addChatMessage("👋 Hola, soy el asistente de multas. ¿Necesitas ayuda para llenar el formulario? Escribe 'ayuda' para ver los comandos.", false);
-            }, 300);
+        if (chatWindow.classList.contains('open')) {
+            chatWindow.classList.remove('open');
+        } else {
+            chatWindow.classList.add('open');
+            if (document.getElementById('chatMessages').children.length === 0) {
+                inicializarChat();
+            }
         }
     });
-    closeChatBtn.addEventListener('click', () => chatWindow.classList.remove('open'));
-    document.getElementById('sendChatBtn').addEventListener('click', sendChatMessage);
-    chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendChatMessage(); });
     
-    // Fecha por defecto = hoy
-    document.getElementById('fecha').value = new Date().toISOString().split('T')[0];
+    closeChatBtn.addEventListener('click', () => {
+        chatWindow.classList.remove('open');
+    });
     
-    // Mostrar si hay multas guardadas
-    if (multasGuardadas.length > 0) {
-        console.log(`📋 ${multasGuardadas.length} multas guardadas localmente`);
-    }
+    sendChatBtn.addEventListener('click', enviarMensaje);
+    chatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') enviarMensaje();
+    });
+    
+    // Cambiar avatar periódicamente (cada 5 interacciones aproximadamente)
+    let contadorMensajes = 0;
+    const oldProcesar = procesarMensaje;
+    window.procesarMensaje = function(msg) {
+        contadorMensajes++;
+        if (contadorMensajes % 5 === 0) {
+            cambiarAvatar();
+            agregarMensaje(`(Por cierto, ahora soy ${avatarActual.nombre} 😊)`, false);
+        }
+        oldProcesar(msg);
+    };
 </script>
 
 </body>
