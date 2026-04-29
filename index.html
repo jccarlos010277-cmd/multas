@@ -81,12 +81,20 @@
             color: #7f8c8d;
             text-align: center;
         }
+        .badge {
+            display: inline-block;
+            background: #2c3e50;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            margin-top: 10px;
+        }
         @media print {
             body { background: white; padding: 0; }
             .card { box-shadow: none; }
             .header, button, .info { display: none; }
             .form-body { padding: 0; }
-            input, select { border: none; padding: 5px; }
         }
     </style>
 </head>
@@ -149,26 +157,50 @@
                         </div>
                         <div class="form-group">
                             <label>📍 MUNICIPIO DE RESIDENCIA</label>
-                            <input type="text" id="municipio" placeholder="Habana Vieja, Guanatánamo, etc." required>
+                            <select id="municipio" required>
+                                <option value="">Seleccione municipio</option>
+                                <option value="Habana Vieja">Habana Vieja</option>
+                                <option value="Centro Habana">Centro Habana</option>
+                                <option value="Cerro">Cerro</option>
+                                <option value="Plaza de la Revolución">Plaza de la Revolución</option>
+                                <option value="10 de Octubre">10 de Octubre</option>
+                                <option value="Arroyo Naranjo">Arroyo Naranjo</option>
+                                <option value="Boyeros">Boyeros</option>
+                                <option value="La Lisa">La Lisa</option>
+                                <option value="Marianao">Marianao</option>
+                                <option value="Guanabacoa">Guanabacoa</option>
+                                <option value="San Miguel del Padrón">San Miguel del Padrón</option>
+                                <option value="Cotorro">Cotorro</option>
+                                <option value="Otro municipio (especificar)">Otro municipio</option>
+                            </select>
                         </div>
                     </div>
 
+                    <div class="form-group" id="otroMunicipioDiv" style="display:none;">
+                        <label>✏️ Especifique otro municipio</label>
+                        <input type="text" id="otroMunicipio" placeholder="Ej: Santiago de Cuba, Holguín, etc.">
+                    </div>
+
                     <button type="submit" id="btnSubmit">
-                        ✅ REGISTRAR MULTA E IMPRIMIR
+                        ✅ REGISTRAR MULTA
                     </button>
                 </form>
 
                 <div class="info">
-                    📄 Al registrar se generarán DOS copias en hoja tamaño carta.<br>
-                    La copia inferior incluye espacio para RECIBÍ CONFORME y SELLO.
+                    📄 Al registrar, la multa irá automáticamente a la hoja según:<br>
+                    <strong>Decreto + Municipio</strong><br>
+                    <span class="badge">87 + Habana Vieja → hoja 87_HabanaVieja</span>
+                    <span class="badge">87 + Otro → hoja 87_OtrosMunicipios</span>
+                    <span class="badge">91 + Habana Vieja → hoja 91_HabanaVieja</span>
+                    <span class="badge">91 + Otro → hoja 91_OtrosMunicipios</span>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // ⚠️ IMPORTANTE: Reemplaza con la URL que copiaste al desplegar
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyuTPKgYpieyXqwyQIeb8FoF6UndoQ5dXGJDDyAus2aZPUNLdrdBVq7NM5CeVmdQxQPBw/exec';
+        // ⚠️ REEMPLAZA con la URL de tu Apps Script desplegado
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyQhXI73A222QeoysMuyw_oPgzLj4pwV5WC6AXIoo-1Oh3oWZtIwHC348ofyXuhw5x-GA/exec';
         
         function obtenerFecha() {
             const hoy = new Date();
@@ -179,11 +211,35 @@
         
         document.getElementById('fecha').value = obtenerFecha();
         
+        // Mostrar campo "Otro municipio" si selecciona esa opción
+        const municipioSelect = document.getElementById('municipio');
+        const otroDiv = document.getElementById('otroMunicipioDiv');
+        const otroInput = document.getElementById('otroMunicipio');
+        
+        municipioSelect.addEventListener('change', function() {
+            if (this.value === 'Otro municipio (especificar)') {
+                otroDiv.style.display = 'block';
+                otroInput.required = true;
+            } else {
+                otroDiv.style.display = 'none';
+                otroInput.required = false;
+            }
+        });
+        
         const form = document.getElementById('multaForm');
         const btn = document.getElementById('btnSubmit');
         
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
+            
+            let municipioFinal = municipioSelect.value;
+            if (municipioFinal === 'Otro municipio (especificar)') {
+                municipioFinal = otroInput.value;
+                if (!municipioFinal) {
+                    alert('Por favor, especifique el municipio');
+                    return;
+                }
+            }
             
             btn.disabled = true;
             btn.innerHTML = '⏳ Registrando multa...';
@@ -197,7 +253,7 @@
                 cuantia: document.getElementById('cuantia').value,
                 infractor: document.getElementById('infractor').value,
                 ci: document.getElementById('ci').value,
-                municipio: document.getElementById('municipio').value
+                municipio: municipioFinal
             };
             
             try {
@@ -214,6 +270,8 @@
                 document.getElementById('articulo').value = '-';
                 document.getElementById('inciso').value = '-';
                 document.getElementById('boleta').focus();
+                otroDiv.style.display = 'none';
+                municipioSelect.value = '';
                 
                 setTimeout(() => {
                     if (confirm('¿Deseas imprimir ahora la multa?')) {
@@ -225,7 +283,7 @@
                 alert('❌ Error: ' + error.message);
             } finally {
                 btn.disabled = false;
-                btn.innerHTML = '✅ REGISTRAR MULTA E IMPRIMIR';
+                btn.innerHTML = '✅ REGISTRAR MULTA';
             }
         });
     </script>
