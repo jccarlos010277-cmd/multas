@@ -3,98 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MINSAF - Registro de Multas</title>
+    <title>MINSAF - Registrar Multa</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            min-height: 100vh;
-            padding: 40px 20px;
+            background: #1e3c72;
+            font-family: 'Segoe UI', sans-serif;
+            padding: 20px;
         }
-        .container { max-width: 700px; margin: 0 auto; }
+        .container { max-width: 500px; margin: 0 auto; }
         .card {
             background: white;
-            border-radius: 25px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-            overflow: hidden;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
         .header {
-            background: #2c3e50;
-            color: white;
-            padding: 25px;
             text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #2c3e50;
         }
-        .header h1 { font-size: 24px; margin-bottom: 5px; }
-        .header p { opacity: 0.9; font-size: 14px; }
-        .form-body { padding: 30px; }
-        .form-group { margin-bottom: 20px; }
-        label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #2c3e50;
-            font-size: 14px;
-        }
+        .header h1 { color: #2c3e50; font-size: 22px; }
+        .header p { color: #666; font-size: 13px; }
         input, select {
             width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
             font-size: 14px;
-            transition: all 0.3s;
         }
-        input:focus, select:focus {
-            outline: none;
-            border-color: #2c3e50;
+        label {
+            font-weight: 600;
+            font-size: 13px;
+            color: #2c3e50;
+            margin-bottom: 5px;
+            display: block;
         }
-        .row { display: flex; gap: 15px; }
-        .row .form-group { flex: 1; }
         button {
             width: 100%;
-            padding: 15px;
+            padding: 14px;
             background: #27ae60;
             color: white;
             border: none;
-            border-radius: 12px;
+            border-radius: 10px;
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 10px;
         }
-        button:hover {
-            background: #219a52;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(39,174,96,0.3);
-        }
-        button:disabled {
-            background: #95a5a6;
-            transform: none;
-        }
+        button:hover { background: #219a52; }
+        .row { display: flex; gap: 10px; }
+        .row > div { flex: 1; }
         .info {
-            background: #ecf0f1;
-            padding: 15px;
-            border-radius: 12px;
-            margin-top: 20px;
+            background: #e8f4fd;
+            padding: 12px;
+            border-radius: 10px;
+            margin-top: 15px;
             font-size: 12px;
-            color: #7f8c8d;
             text-align: center;
-        }
-        .badge {
-            display: inline-block;
-            background: #2c3e50;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 11px;
-            margin-top: 10px;
-        }
-        @media print {
-            body { background: white; padding: 0; }
-            .card { box-shadow: none; }
-            .header, button, .info { display: none; }
-            .form-body { padding: 0; }
+            color: #2c3e50;
         }
     </style>
 </head>
@@ -103,128 +71,153 @@
         <div class="card">
             <div class="header">
                 <h1>🏛️ MINSAF - Dirección de Multas</h1>
-                <p>Habana Vieja | Código: 352-2304</p>
+                <p>Habana Vieja | Registro de Infracciones</p>
             </div>
-            <div class="form-body">
-                <form id="multaForm">
-                    <div class="row">
-                        <div class="form-group">
-                            <label>📅 FECHA</label>
-                            <input type="text" id="fecha" readonly style="background:#f5f5f5">
-                        </div>
-                        <div class="form-group">
-                            <label>🎫 CÓDIGO BOLETA</label>
-                            <input type="text" id="boleta" placeholder="Ej: CB542068" required>
-                        </div>
+
+            <form id="multaForm">
+                <div class="row">
+                    <div>
+                        <label>📅 FECHA</label>
+                        <input type="text" id="fecha" readonly style="background:#f0f0f0">
                     </div>
-
-                    <div class="row">
-                        <div class="form-group">
-                            <label>⚖️ DECRETO</label>
-                            <select id="imposicion" required>
-                                <option value="">Seleccione</option>
-                                <option value="18">Decreto 18</option>
-                                <option value="87">Decreto 87</option>
-                                <option value="91">Decreto 91</option>
-                                <option value="272">Decreto 272</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>📌 ARTÍCULO</label>
-                            <input type="text" id="articulo" value="-">
-                        </div>
-                        <div class="form-group">
-                            <label>✏️ INCISO</label>
-                            <input type="text" id="inciso" value="-">
-                        </div>
+                    <div>
+                        <label>🎫 NÚMERO DE BOLETA</label>
+                        <input type="text" id="boleta" placeholder="Ej: CB542068" required>
                     </div>
-
-                    <div class="row">
-                        <div class="form-group">
-                            <label>💰 CUANTÍA (CUP)</label>
-                            <input type="number" step="0.01" id="cuantia" placeholder="500.00" required>
-                        </div>
-                        <div class="form-group">
-                            <label>👤 NOMBRE DEL INFRACTOR</label>
-                            <input type="text" id="infractor" placeholder="Nombre y Apellidos" required>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="form-group">
-                            <label>🆔 CARNET DE IDENTIDAD</label>
-                            <input type="text" id="ci" placeholder="Ej: 80010112345" required>
-                        </div>
-                        <div class="form-group">
-                            <label>📍 MUNICIPIO DE RESIDENCIA</label>
-                            <select id="municipio" required>
-                                <option value="">Seleccione municipio</option>
-                                <option value="Habana Vieja">Habana Vieja</option>
-                                <option value="Centro Habana">Centro Habana</option>
-                                <option value="Cerro">Cerro</option>
-                                <option value="Plaza de la Revolución">Plaza de la Revolución</option>
-                                <option value="10 de Octubre">10 de Octubre</option>
-                                <option value="Arroyo Naranjo">Arroyo Naranjo</option>
-                                <option value="Boyeros">Boyeros</option>
-                                <option value="La Lisa">La Lisa</option>
-                                <option value="Marianao">Marianao</option>
-                                <option value="Guanabacoa">Guanabacoa</option>
-                                <option value="San Miguel del Padrón">San Miguel del Padrón</option>
-                                <option value="Cotorro">Cotorro</option>
-                                <option value="Otro municipio (especificar)">Otro municipio</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group" id="otroMunicipioDiv" style="display:none;">
-                        <label>✏️ Especifique otro municipio</label>
-                        <input type="text" id="otroMunicipio" placeholder="Ej: Santiago de Cuba, Holguín, etc.">
-                    </div>
-
-                    <button type="submit" id="btnSubmit">
-                        ✅ REGISTRAR MULTA
-                    </button>
-                </form>
-
-                <div class="info">
-                    📄 Al registrar, la multa irá automáticamente a la hoja según:<br>
-                    <strong>Decreto + Municipio</strong><br>
-                    <span class="badge">87 + Habana Vieja → hoja 87_HabanaVieja</span>
-                    <span class="badge">87 + Otro → hoja 87_OtrosMunicipios</span>
-                    <span class="badge">91 + Habana Vieja → hoja 91_HabanaVieja</span>
-                    <span class="badge">91 + Otro → hoja 91_OtrosMunicipios</span>
                 </div>
-            </div>
+
+                <div class="row">
+                    <div>
+                        <label>⚖️ DECRETO</label>
+                        <select id="decreto" required>
+                            <option value="">Seleccione</option>
+                            <option value="18">Decreto 18</option>
+                            <option value="87">Decreto 87</option>
+                            <option value="91">Decreto 91</option>
+                            <option value="272">Decreto 272</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>📌 ARTÍCULO</label>
+                        <input type="text" id="articulo" placeholder="Ej: 94" value="-">
+                    </div>
+                    <div>
+                        <label>✏️ INCISO</label>
+                        <input type="text" id="inciso" placeholder="Ej: b" value="-">
+                    </div>
+                </div>
+
+                <div>
+                    <label>💰 CUANTÍA DE LA MULTA (CUP)</label>
+                    <input type="number" step="0.01" id="cuantia" placeholder="500.00" required>
+                </div>
+
+                <div>
+                    <label>👤 NOMBRE Y APELLIDOS DEL INFRACTOR</label>
+                    <input type="text" id="infractor" placeholder="Nombre completo" required>
+                </div>
+
+                <div class="row">
+                    <div>
+                        <label>🆔 CARNET DE IDENTIDAD</label>
+                        <input type="text" id="ci" placeholder="80010112345" required>
+                    </div>
+                    <div>
+                        <label>📍 MUNICIPIO DE RESIDENCIA</label>
+                        <select id="municipio" required>
+                            <option value="">Seleccione</option>
+                            <option value="Habana Vieja">🏠 Habana Vieja</option>
+                            <option value="Centro Habana">🌆 Centro Habana</option>
+                            <option value="Cerro">⛰️ Cerro</option>
+                            <option value="Plaza de la Revolución">🏛️ Plaza</option>
+                            <option value="10 de Octubre">📅 10 de Octubre</option>
+                            <option value="Arroyo Naranjo">🍊 Arroyo Naranjo</option>
+                            <option value="Boyeros">🚜 Boyeros</option>
+                            <option value="La Lisa">🌸 La Lisa</option>
+                            <option value="Marianao">🎵 Marianao</option>
+                            <option value="Guanabacoa">⛪ Guanabacoa</option>
+                            <option value="San Miguel del Padrón">⛅ San Miguel</option>
+                            <option value="Cotorro">🐓 Cotorro</option>
+                            <option value="Otro municipio">📍 Otro municipio</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="otroMunicipioDiv" style="display:none;">
+                    <label>✏️ Especifique el municipio</label>
+                    <input type="text" id="otroMunicipio" placeholder="Ej: Santiago de Cuba">
+                </div>
+
+                <div class="row">
+                    <div>
+                        <label>👮 INSPECTOR ACTUANTE</label>
+                        <select id="inspector" required>
+                            <option value="">Seleccione</option>
+                            <option>Mirta</option><option>Mae</option><option>Barbarita</option>
+                            <option>Dayami</option><option>Dadioska</option><option>Rolando</option>
+                            <option>Gerter</option><option>Maritza</option><option>Roxana</option>
+                            <option>Yeni</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" id="btnSubmit">✅ REGISTRAR MULTA</button>
+
+                <div class="info" id="infoDestino">
+                    📌 La multa irá a la hoja correspondiente según Decreto + Municipio
+                </div>
+            </form>
         </div>
     </div>
 
     <script>
-        // ⚠️ REEMPLAZA con la URL de tu Apps Script desplegado
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyQhXI73A222QeoysMuyw_oPgzLj4pwV5WC6AXIoo-1Oh3oWZtIwHC348ofyXuhw5x-GA/exec';
+        // ⚠️ REEMPLAZA con la URL que copiaste de Apps Script
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx3XB62izMMzLo2ktvA4cPg3mK3VghjGm_w9XL6O6ZK4u1lZypVIu6ieBeHlbbIrp2Z/exec';
         
-        function obtenerFecha() {
-            const hoy = new Date();
-            const dia = String(hoy.getDate()).padStart(2, '0');
-            const mes = String(hoy.getMonth() + 1).padStart(2, '0');
-            return `${dia}/${mes}`;
-        }
+        // Fecha automática
+        const hoy = new Date();
+        const dia = String(hoy.getDate()).padStart(2, '0');
+        const mes = String(hoy.getMonth() + 1).padStart(2, '0');
+        const año = hoy.getFullYear();
+        document.getElementById('fecha').value = `${dia}/${mes}/${año}`;
         
-        document.getElementById('fecha').value = obtenerFecha();
-        
-        // Mostrar campo "Otro municipio" si selecciona esa opción
+        // Mostrar campo "Otro municipio"
         const municipioSelect = document.getElementById('municipio');
         const otroDiv = document.getElementById('otroMunicipioDiv');
         const otroInput = document.getElementById('otroMunicipio');
         
         municipioSelect.addEventListener('change', function() {
-            if (this.value === 'Otro municipio (especificar)') {
+            if (this.value === 'Otro municipio') {
                 otroDiv.style.display = 'block';
                 otroInput.required = true;
             } else {
                 otroDiv.style.display = 'none';
                 otroInput.required = false;
             }
+            actualizarInfoDestino();
         });
+        
+        const decretoSelect = document.getElementById('decreto');
+        decretoSelect.addEventListener('change', actualizarInfoDestino);
+        
+        function actualizarInfoDestino() {
+            const decreto = decretoSelect.value;
+            let municipio = municipioSelect.value;
+            if (municipio === 'Otro municipio') {
+                municipio = otroInput.value || "?";
+            }
+            
+            const infoDiv = document.getElementById('infoDestino');
+            if (decreto && municipio) {
+                const esHabanaVieja = municipio === 'Habana Vieja';
+                const destino = esHabanaVieja ? `${decreto}_HabanaVieja` : `${decreto}_OtrosMunicipios`;
+                infoDiv.innerHTML = `📌 La multa irá a la hoja: <strong>${destino}</strong>`;
+                infoDiv.style.background = "#d4edda";
+            } else {
+                infoDiv.innerHTML = "📌 Seleccione Decreto y Municipio para ver el destino";
+                infoDiv.style.background = "#e8f4fd";
+            }
+        }
         
         const form = document.getElementById('multaForm');
         const btn = document.getElementById('btnSubmit');
@@ -233,7 +226,7 @@
             e.preventDefault();
             
             let municipioFinal = municipioSelect.value;
-            if (municipioFinal === 'Otro municipio (especificar)') {
+            if (municipioFinal === 'Otro municipio') {
                 municipioFinal = otroInput.value;
                 if (!municipioFinal) {
                     alert('Por favor, especifique el municipio');
@@ -247,40 +240,37 @@
             const datos = {
                 fecha: document.getElementById('fecha').value,
                 boleta: document.getElementById('boleta').value,
-                imposicion: document.getElementById('imposicion').value,
+                decreto: document.getElementById('decreto').value,
                 articulo: document.getElementById('articulo').value || '-',
                 inciso: document.getElementById('inciso').value || '-',
                 cuantia: document.getElementById('cuantia').value,
                 infractor: document.getElementById('infractor').value,
                 ci: document.getElementById('ci').value,
-                municipio: municipioFinal
+                municipio: municipioFinal,
+                inspector: document.getElementById('inspector').value
             };
             
             try {
-                const response = await fetch(SCRIPT_URL, {
+                await fetch(SCRIPT_URL, {
                     method: 'POST',
                     mode: 'no-cors',
                     body: JSON.stringify(datos)
                 });
                 
-                alert('✅ Multa registrada exitosamente\n\n📄 Ahora puedes imprimir (Ctrl+P)');
+                const esHabanaVieja = municipioFinal === 'Habana Vieja';
+                const hojaDestino = esHabanaVieja ? `${datos.decreto}_HabanaVieja` : `${datos.decreto}_OtrosMunicipios`;
+                
+                alert(`✅ Multa registrada exitosamente!\n\n📄 Hoja destino: ${hojaDestino}\n🔄 Fila: nueva al final`);
                 
                 form.reset();
-                document.getElementById('fecha').value = obtenerFecha();
+                document.getElementById('fecha').value = `${dia}/${mes}/${año}`;
                 document.getElementById('articulo').value = '-';
                 document.getElementById('inciso').value = '-';
                 document.getElementById('boleta').focus();
                 otroDiv.style.display = 'none';
-                municipioSelect.value = '';
-                
-                setTimeout(() => {
-                    if (confirm('¿Deseas imprimir ahora la multa?')) {
-                        window.print();
-                    }
-                }, 500);
                 
             } catch (error) {
-                alert('❌ Error: ' + error.message);
+                alert('❌ Error al registrar: ' + error.message);
             } finally {
                 btn.disabled = false;
                 btn.innerHTML = '✅ REGISTRAR MULTA';
