@@ -2,787 +2,136 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Gestión de Multas | Inspectores Sanitarios</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Inspección Sanitaria</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Poppins', sans-serif; background: #f0f2f5; padding-bottom: 80px; }
-        
-        .header {
-            background: linear-gradient(135deg, #1B5E20, #2E7D32);
-            color: white;
-            padding: 20px 16px;
-            text-align: center;
-            border-radius: 0 0 25px 25px;
-        }
-        .header h1 { font-size: 1.4rem; }
-        .header h1 i { margin-right: 8px; }
-        .header p { font-size: 0.7rem; opacity: 0.9; margin-top: 4px; }
-        
-        /* Switch de modo */
-        .modo-switch {
-            background: white;
-            margin: 15px 16px;
-            padding: 8px;
-            border-radius: 50px;
-            display: flex;
-            gap: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        .modo-btn {
-            flex: 1;
-            text-align: center;
-            padding: 10px;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            background: #f0f2f5;
-            color: #666;
-        }
-        .modo-btn.active {
-            background: linear-gradient(135deg, #1B5E20, #2E7D32);
-            color: white;
-        }
-        .modo-btn i { margin-right: 6px; }
-        
-        .container { max-width: 600px; margin: 0 auto; padding: 0 16px; }
-        
-        .form-card {
-            background: white;
-            border-radius: 24px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        
-        .form-group { margin-bottom: 16px; }
-        .form-group label {
-            display: block;
-            font-weight: 600;
-            font-size: 0.8rem;
-            margin-bottom: 5px;
-            color: #333;
-        }
-        .form-group label .required { color: #e53935; }
-        .form-group label .optional { font-weight: normal; font-size: 0.65rem; color: #888; }
-        
-        .form-group input, .form-group select, .form-group textarea {
-            width: 100%;
-            padding: 12px 14px;
-            border: 1px solid #ddd;
-            border-radius: 14px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 0.9rem;
-            background: #fafafa;
-        }
-        .form-group input:focus, .form-group select:focus {
-            outline: none;
-            border-color: #2E7D32;
-            background: white;
-        }
-        
-        /* Campos del modo rápido */
-        .rapido-campos {
-            background: #fff8e1;
-            padding: 12px;
-            border-radius: 16px;
-            margin-bottom: 16px;
-            border-left: 4px solid #FFB300;
-        }
-        .rapido-campos h4 {
-            font-size: 0.85rem;
-            color: #E65100;
-            margin-bottom: 12px;
-        }
-        
-        .codigo-rapido {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 8px;
-        }
-        .btn-codigo {
-            background: #e8f5e9;
-            border: 1px solid #2E7D32;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            color: #2E7D32;
-            cursor: pointer;
-        }
-        
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin: 12px 0;
-        }
-        
-        .btn-submit {
-            background: linear-gradient(135deg, #25D366, #128C7E);
-            color: white;
-            border: none;
-            padding: 14px 20px;
-            width: 100%;
-            border-radius: 40px;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-        }
-        
-        .resumen-card {
-            background: #e8f5e9;
-            border-radius: 16px;
-            padding: 12px;
-            margin: 15px 0;
-            border-left: 4px solid #2E7D32;
-            display: none;
-        }
-        .resumen-card h4 { color: #2E7D32; font-size: 0.85rem; margin-bottom: 8px; }
-        .resumen-card p { font-size: 0.75rem; margin: 3px 0; }
-        
-        .alert {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 12px 20px;
-            border-radius: 30px;
-            background: #d4edda;
-            color: #155724;
-            display: none;
-            z-index: 1000;
-            font-size: 0.8rem;
-            white-space: nowrap;
-        }
-        
-        /* Chatbot flotante */
-        .chat-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            z-index: 1000;
-            border: 2px solid white;
-            overflow: hidden;
-        }
-        .chat-btn img { width: 100%; height: 100%; object-fit: cover; }
-        
-        .chat-window {
-            position: fixed;
-            bottom: 90px;
-            right: 20px;
-            width: 360px;
-            max-width: calc(100vw - 40px);
-            height: 500px;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            display: none;
-            flex-direction: column;
-            z-index: 1001;
-            overflow: hidden;
-        }
-        .chat-window.open { display: flex; }
-        
-        .chat-header {
-            background: linear-gradient(135deg, #075E54, #128C7E);
-            color: white;
-            padding: 10px 14px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .chat-header img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-        .chat-header-info { flex: 1; }
-        .chat-header-info h4 { font-size: 0.9rem; margin: 0; }
-        .chat-header-info p { font-size: 0.6rem; opacity: 0.8; }
-        .close-chat { background: none; border: none; color: white; font-size: 22px; cursor: pointer; }
-        
-        .chat-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 12px;
-            background: #ECE5DD;
-        }
-        
-        .message {
-            margin-bottom: 10px;
-            display: flex;
-            flex-direction: column;
-        }
-        .message.bot { align-items: flex-start; }
-        .message.user { align-items: flex-end; }
-        
-        .message-bubble {
-            max-width: 85%;
-            padding: 8px 12px;
-            border-radius: 18px;
-            font-size: 0.8rem;
-        }
-        .message.bot .message-bubble {
-            background: white;
-            border-top-left-radius: 4px;
-            color: #333;
-        }
-        .message.user .message-bubble {
-            background: #DCF8C6;
-            color: #1F2937;
-        }
-        
-        .quick-replies {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-top: 6px;
-        }
-        .quick-reply-btn {
-            background: #e8f5e9;
-            border: 1px solid #2E7D32;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.65rem;
-            cursor: pointer;
-        }
-        
-        .chat-input-area {
-            display: flex;
-            padding: 10px;
-            background: white;
-            gap: 8px;
-        }
-        .chat-input-area input {
-            flex: 1;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 25px;
-            font-size: 0.8rem;
-        }
-        .chat-input-area button {
-            background: #128C7E;
-            border: none;
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            color: white;
-            cursor: pointer;
-        }
-        
-        @media (max-width: 480px) {
-            .form-card { padding: 16px; }
-            .chat-window { width: calc(100vw - 40px); right: 20px; bottom: 85px; height: 480px; }
-        }
+        :root { --primary-color: #2c3e50; }
+        body { background-color: #f0f2f5; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .header-app { background: var(--primary-color); color: white; padding: 20px; border-radius: 0 0 20px 20px; margin-bottom: 20px; }
+        .card { border: none; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .btn-check:checked + .btn-outline-primary { background-color: #0d6efd; color: white; }
+        .btn-submit { background-color: #27ae60; border: none; padding: 15px; font-weight: bold; font-size: 1.1rem; }
+        .btn-submit:active { transform: scale(0.98); }
     </style>
 </head>
 <body>
 
-<div class="header">
-    <h1><i class="fas fa-hand-holding-heart"></i> Gestión de Multas</h1>
-    <p>Inspectores Sanitarios | Sistema rápido y amigable</p>
+<div class="header-app text-center shadow">
+    <h2>Control de Inspecciones</h2>
+    <p class="mb-0">Municipio Habana Vieja</p>
 </div>
 
-<div class="modo-switch">
-    <div class="modo-btn active" data-modo="rapido"><i class="fas fa-bolt"></i> Rápido (Foto + Nombre + CI)</div>
-    <div class="modo-btn" data-modo="completo"><i class="fas fa-clipboard-list"></i> Completo</div>
-</div>
+<div class="container mb-5">
+    <div class="card p-4">
+        <form id="formInspeccion">
+            <div class="mb-4">
+                <label class="form-label fw-bold">Inspector Actuante</label>
+                <select class="form-select form-select-lg" id="inspector" required>
+                    <option value="">Seleccione su nombre...</option>
+                    <option>Mirta</option>
+                    <option>Mae</option>
+                    <option>Barbarita</option>
+                    <option>Dayami</option>
+                    <option>Dadioska</option>
+                    <option>Rolando</option>
+                    <option>Gerter</option>
+                    <option>Maritza</option>
+                    <option>Roxana</option>
+                    <option>Yeni</option>
+                </select>
+            </div>
 
-<div class="container">
-    <div class="form-card">
-        <form id="multaForm">
-            <!-- Modo Rápido (visible por defecto) -->
-            <div id="modoRapido">
-                <div class="rapido-campos">
-                    <h4><i class="fas fa-camera"></i> Solo lo esencial (30 segundos)</h4>
-                    <div class="form-group">
-                        <label>📸 Descripción de la multa <span class="required">*</span></label>
-                        <textarea id="descripcionRapida" rows="2" placeholder="Ej: Venta de alimentos en condiciones insalubres, falta de higiene..."></textarea>
-                    </div>
+            <div class="mb-4">
+                <label class="form-label fw-bold d-block">Tipo de Higiene</label>
+                <div class="btn-group w-100" role="group">
+                    <input type="radio" class="btn-check" name="higiene" id="ha" value="HA" required>
+                    <label class="btn btn-outline-primary p-3" for="ha">Alimentos (HA)</label>
+                    <input type="radio" class="btn-check" name="higiene" id="he" value="HE">
+                    <label class="btn btn-outline-primary p-3" for="he">Epidem. (HE)</label>
+                    <input type="radio" class="btn-check" name="higiene" id="hc" value="HC">
+                    <label class="btn btn-outline-primary p-3" for="hc">Comunal (HC)</label>
                 </div>
-                <div class="form-group">
-                    <label>👤 Nombre del infractor <span class="required">*</span></label>
-                    <input type="text" id="nombreRapido" placeholder="Nombre y apellidos">
+            </div>
+
+            <div class="row g-3 mb-4">
+                <div class="col-6">
+                    <label class="form-label small fw-bold">Código (Boletín)</label>
+                    <input type="text" class="form-control" id="codigo" placeholder="BM123456" required>
                 </div>
-                <div class="form-group">
-                    <label>🆔 Carnet de identidad <span class="required">*</span></label>
-                    <input type="text" id="ciRapido" placeholder="Ej: 88010112345">
-                </div>
-                <div class="form-group">
-                    <label>🏙️ Municipio <span class="required">*</span></label>
-                    <select id="municipioRapido">
-                        <option value="">Seleccionar</option>
-                        <option>Habana Vieja</option>
-                        <option>Centro Habana</option>
-                        <option>Cerro</option>
-                        <option>Guanabacoa</option>
-                        <option>10 de Octubre</option>
-                        <option>Playa</option>
-                        <option>Plaza</option>
-                        <option>Marianao</option>
-                        <option>La Lisa</option>
-                        <option>Boyeros</option>
-                        <option>Arroyo Naranjo</option>
-                        <option>Cotorro</option>
-                        <option>San Miguel del Padrón</option>
+                <div class="col-6">
+                    <label class="form-label small fw-bold">Decreto</label>
+                    <select class="form-select" id="decreto" required>
+                        <option>87</option>
+                        <option>272</option>
+                        <option>18</option>
+                        <option>45</option>
+                        <option>201</option>
                     </select>
                 </div>
             </div>
-            
-            <!-- Modo Completo (oculto por defecto) -->
-            <div id="modoCompleto" style="display: none;">
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                    <div class="form-group">
-                        <label>📅 Fecha</label>
-                        <input type="date" id="fecha">
-                    </div>
-                    <div class="form-group">
-                        <label>🎫 Código talón</label>
-                        <input type="text" id="codigoTalon" maxlength="8" placeholder="CB001379">
-                        <div class="codigo-rapido">
-                            <button type="button" class="btn-codigo" data-codigo="CB001379">CB001379</button>
-                            <button type="button" class="btn-codigo" data-codigo="CB002145">CB002145</button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checkbox-group">
-                    <input type="checkbox" id="talonViejo">
-                    <label>📌 Talón viejo</label>
-                </div>
-                
-                <div class="form-group">
-                    <label>👮 Inspector</label>
-                    <select id="inspector">
-                        <option value="">Seleccionar</option>
-                        <option>Yenni Covarrubia</option><option>Mae</option><option>Maritza</option>
-                        <option>Miriam</option><option>Dallami</option><option>Adiuska</option>
-                        <option>Zaida</option><option>Gerter</option><option>Rolando</option>
-                        <option>Emelina</option><option>Mari</option><option>Ovidio</option>
-                        <option>Joan</option><option>Rosita</option><option>Yeni</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label>⚖️ Decreto / Ley</label>
-                    <select id="decreto">
-                        <option value="">Seleccionar</option>
-                        <option value="91">Decreto Ley 91</option>
-                        <option value="272">Decreto Ley 272</option>
-                        <option value="18">Ley 18</option>
-                        <option value="87">Resolución 87</option>
-                    </select>
-                </div>
-                
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                    <div class="form-group"><label>📑 Artículo</label><input type="text" id="articulo"></div>
-                    <div class="form-group"><label>🔤 Inciso</label><input type="text" id="inciso"></div>
-                </div>
-                
-                <div class="form-group">
-                    <label>💰 Cuantía (CUP)</label>
-                    <select id="cuantia">
-                        <option value="">Seleccionar</option>
-                        <option>500</option><option>1000</option><option>2500</option>
-                        <option>5000</option><option>10000</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label>👤 Nombre completo</label>
-                    <input type="text" id="nombreCompleto" placeholder="Nombre y apellidos">
-                </div>
-                
-                <div class="form-group">
-                    <label>🆔 Carnet de identidad</label>
-                    <input type="text" id="ciCompleto" placeholder="Ej: 88010112345">
-                </div>
-                
-                <div class="form-group">
-                    <label>🏙️ Municipio</label>
-                    <select id="municipioCompleto">
-                        <option value="">Seleccionar</option>
-                        <option>Habana Vieja</option><option>Centro Habana</option><option>Cerro</option>
-                        <option>Guanabacoa</option><option>10 de Octubre</option><option>Playa</option>
-                        <option>Plaza</option><option>Marianao</option><option>La Lisa</option>
-                        <option>Boyeros</option><option>Arroyo Naranjo</option><option>Cotorro</option>
-                        <option>San Miguel del Padrón</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label>📝 Observaciones</label>
-                    <textarea id="observaciones" rows="2"></textarea>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Datos del Infractor</label>
+                <input type="text" class="form-control mb-2" id="nombre" placeholder="Nombre Completo" required>
+                <input type="number" class="form-control mb-2" id="ci" placeholder="Carnet de Identidad" required>
+                <input type="text" class="form-control" id="centro" placeholder="Centro de Trabajo / Mipyme" required>
+            </div>
+
+            <div class="mb-4">
+                <input type="text" class="form-control mb-2" id="direccion" placeholder="Dirección del hecho" required>
+                <div class="input-group">
+                    <span class="input-group-text">$</span>
+                    <input type="number" class="form-control" id="importe" placeholder="Importe de la multa" required>
                 </div>
             </div>
-            
-            <div id="resumenMulta" class="resumen-card" style="display: none;">
-                <h4><i class="fas fa-check-circle"></i> Multa lista para guardar</h4>
-                <div id="resumenTexto"></div>
-            </div>
-            
-            <button type="submit" class="btn-submit" id="submitBtn">
-                <i class="fas fa-save"></i> Guardar multa
-            </button>
+
+            <button type="submit" class="btn btn-success w-100 btn-submit shadow">REGISTRAR EN TABLA INTEGRAL</button>
         </form>
     </div>
 </div>
 
-<!-- Chatbot -->
-<div class="chat-btn" id="chatBtn">
-    <img id="chatAvatar" src="https://i.postimg.cc/fRxPW9R2/avatar-mary.webp" alt="Asistente">
-</div>
-
-<div class="chat-window" id="chatWindow">
-    <div class="chat-header">
-        <img id="chatAvatarHeader" src="https://i.postimg.cc/fRxPW9R2/avatar-mary.webp">
-        <div class="chat-header-info">
-            <h4 id="chatName">Mary</h4>
-            <p>🤝 Tu compañera de trabajo</p>
-        </div>
-        <button class="close-chat" id="closeChatBtn">&times;</button>
-    </div>
-    <div class="chat-messages" id="chatMessages"></div>
-    <div class="chat-input-area">
-        <input type="text" id="chatInput" placeholder="Escribe para conversar...">
-        <button id="sendChatBtn"><i class="fas fa-paper-plane"></i></button>
-    </div>
-</div>
-
-<div id="alertMsg" class="alert"></div>
-
 <script>
-    // ========== AVATARES ==========
-    const avatares = [
-        { nombre: "Mary", img: "https://i.postimg.cc/fRxPW9R2/avatar-mary.webp", emoji: "🌸" },
-        { nombre: "Betty", img: "https://i.postimg.cc/3xgqrvxb/avatar-betty.webp", emoji: "💜" }
-    ];
-    let avatarActual = avatares[0];
-    
-    // ========== MODO ACTUAL ==========
-    let modoActual = "rapido";
-    
-    // Switch de modo
-    document.querySelectorAll('.modo-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('.modo-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            modoActual = btn.getAttribute('data-modo');
-            
-            if (modoActual === "rapido") {
-                document.getElementById('modoRapido').style.display = "block";
-                document.getElementById('modoCompleto').style.display = "none";
-            } else {
-                document.getElementById('modoRapido').style.display = "none";
-                document.getElementById('modoCompleto').style.display = "block";
-                document.getElementById('fecha').value = new Date().toISOString().split('T')[0];
-            }
-        });
-    });
-    
-    // ========== DATOS ==========
-    let multasGuardadas = JSON.parse(localStorage.getItem('multas')) || [];
-    let inspectorActual = localStorage.getItem('ultimoInspector') || "";
-    
-    // ========== MODO RÁPIDO: Guardar ==========
-    document.getElementById('multaForm').addEventListener('submit', function(e) {
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbyHvTu76uXAby2uXpBtnNO9BU8-A_3JcCFglIC7f9tPvmqEwDtnMO4kHr9vTnNm5Jtg/exec'; // <--- PEGA AQUÍ LA URL DEL PASO 1
+    const form = document.getElementById('formInspeccion');
+
+    form.addEventListener('submit', e => {
         e.preventDefault();
-        
-        let multa = {};
-        
-        if (modoActual === "rapido") {
-            const descripcion = document.getElementById('descripcionRapida').value;
-            const nombre = document.getElementById('nombreRapido').value;
-            const ci = document.getElementById('ciRapido').value;
-            const municipio = document.getElementById('municipioRapido').value;
-            
-            if (!nombre || !ci || !municipio) {
-                mostrarAlerta("❌ Nombre, Carnet y Municipio son obligatorios", "error");
-                return;
-            }
-            
-            multa = {
-                id: Date.now(),
-                fecha: new Date().toISOString().split('T')[0],
-                modo: "rapido",
-                descripcion: descripcion || "Sin descripción",
-                nombre: nombre,
-                ci: ci,
-                municipio: municipio,
-                inspector: inspectorActual || "No especificado",
-                fechaRegistro: new Date().toISOString()
-            };
-            
-        } else {
-            // Modo completo
-            const fecha = document.getElementById('fecha').value;
-            const codigoTalon = document.getElementById('codigoTalon').value || "No";
-            const inspector = document.getElementById('inspector').value;
-            const decreto = document.getElementById('decreto').options[document.getElementById('decreto').selectedIndex]?.text || '';
-            const articulo = document.getElementById('articulo').value;
-            const inciso = document.getElementById('inciso').value;
-            const cuantia = document.getElementById('cuantia').value;
-            const nombre = document.getElementById('nombreCompleto').value;
-            const ci = document.getElementById('ciCompleto').value;
-            const municipio = document.getElementById('municipioCompleto').value;
-            const observaciones = document.getElementById('observaciones').value;
-            
-            if (!fecha || !inspector || !decreto || !cuantia || !nombre || !ci || !municipio) {
-                mostrarAlerta("❌ Completa los campos obligatorios", "error");
-                return;
-            }
-            
-            multa = {
-                id: Date.now(),
-                modo: "completo",
-                fecha: fecha,
-                codigoTalon: codigoTalon,
-                talonViejo: document.getElementById('talonViejo').checked,
-                inspector: inspector,
-                decreto: decreto,
-                articulo: articulo || '-',
-                inciso: inciso || '-',
-                cuantia: parseInt(cuantia),
-                nombre: nombre,
-                ci: ci,
-                municipio: municipio,
-                observaciones: observaciones || '-',
-                fechaRegistro: new Date().toISOString()
-            };
-        }
-        
-        multasGuardadas.push(multa);
-        localStorage.setItem('multas', JSON.stringify(multasGuardadas));
-        
-        mostrarAlerta(`✅ Multa guardada para ${multa.nombre}`, "success");
-        
-        // Limpiar campos rápidos
-        document.getElementById('descripcionRapida').value = '';
-        document.getElementById('nombreRapido').value = '';
-        document.getElementById('ciRapido').value = '';
-        document.getElementById('municipioRapido').value = '';
-        
-        // Limpiar campos completos
-        document.getElementById('codigoTalon').value = '';
-        document.getElementById('talonViejo').checked = false;
-        document.getElementById('decreto').value = '';
-        document.getElementById('articulo').value = '';
-        document.getElementById('inciso').value = '';
-        document.getElementById('cuantia').value = '';
-        document.getElementById('nombreCompleto').value = '';
-        document.getElementById('ciCompleto').value = '';
-        document.getElementById('municipioCompleto').value = '';
-        document.getElementById('observaciones').value = '';
-    });
-    
-    function mostrarAlerta(msg, tipo) {
-        const alertDiv = document.getElementById('alertMsg');
-        alertDiv.textContent = msg;
-        alertDiv.style.display = 'block';
-        setTimeout(() => {
-            alertDiv.style.opacity = '0';
-            setTimeout(() => {
-                alertDiv.style.display = 'none';
-                alertDiv.style.opacity = '1';
-            }, 300);
-        }, 2500);
-    }
-    
-    // Botones de código rápido
-    document.querySelectorAll('.btn-codigo').forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.getElementById('codigoTalon').value = btn.getAttribute('data-codigo');
+        const btn = e.target.querySelector('button');
+        btn.disabled = true;
+        btn.innerText = 'Enviando datos...';
+
+        const data = {
+            inspector: document.getElementById('inspector').value,
+            higiene: document.querySelector('input[name="higiene"]:checked').value,
+            codigo: document.getElementById('codigo').value,
+            decreto: document.getElementById('decreto').value,
+            nombre: document.getElementById('nombre').value,
+            ci: document.getElementById('ci').value,
+            centro: document.getElementById('centro').value,
+            direccion: document.getElementById('direccion').value,
+            importe: document.getElementById('importe').value,
+            articulo: "N/A", // Se pueden añadir más campos según necesites
+            inciso: "N/A"
+        };
+
+        fetch(scriptURL, { 
+            method: 'POST', 
+            mode: 'no-cors', // Necesario para Google Apps Script
+            cache: 'no-cache',
+            body: JSON.stringify(data)
+        })
+        .then(() => {
+            alert('¡Registro exitoso!');
+            form.reset();
+            btn.disabled = false;
+            btn.innerText = 'REGISTRAR EN TABLA INTEGRAL';
+        })
+        .catch(error => {
+            alert('Error al enviar');
+            btn.disabled = false;
         });
     });
-    
-    // ========== CHATBOT CONVERSACIONAL ==========
-    function cambiarAvatar() {
-        const randomIndex = Math.floor(Math.random() * avatares.length);
-        avatarActual = avatares[randomIndex];
-        document.getElementById('chatAvatar').src = avatarActual.img;
-        document.getElementById('chatAvatarHeader').src = avatarActual.img;
-        document.getElementById('chatName').textContent = avatarActual.nombre;
-    }
-    
-    function agregarMensaje(texto, esUsuario = false, respuestasRapidas = null) {
-        const container = document.getElementById('chatMessages');
-        const div = document.createElement('div');
-        div.className = `message ${esUsuario ? 'user' : 'bot'}`;
-        div.innerHTML = `<div class="message-bubble">${texto}</div>`;
-        container.appendChild(div);
-        
-        if (respuestasRapidas && !esUsuario) {
-            const repliesDiv = document.createElement('div');
-            repliesDiv.className = 'quick-replies';
-            respuestasRapidas.forEach(reply => {
-                const btn = document.createElement('button');
-                btn.className = 'quick-reply-btn';
-                btn.textContent = reply;
-                btn.onclick = () => {
-                    agregarMensaje(reply, true);
-                    procesarMensaje(reply);
-                };
-                repliesDiv.appendChild(btn);
-            });
-            container.appendChild(repliesDiv);
-        }
-        
-        container.scrollTop = container.scrollHeight;
-    }
-    
-    // Mensajes predefinidos para conversación
-    const mensajesAnimo = [
-        "💪 ¡Eres fuerte! Este trabajo no es fácil, pero lo que haces es muy importante para la salud de todos.",
-        "🌿 Respira hondo. Un día más, una batalla más. No estás solo/a en esto.",
-        "🤗 Te mando un abrazo virtual. Cuida tu salud también, que eres importante.",
-        "🌟 A veces toca trabajar con lo que hay, pero tú sigues adelante. Eso se respeta.",
-        "🍃 Tómate un segundo para ti. Un café, un respiro. Mañana será otro día.",
-        "🏆 Cada multa que pones ayuda a mantener el orden. Tu trabajo tiene sentido.",
-        "💙 Aquí estoy cuando necesites desahogarte o simplemente hablar."
-    ];
-    
-    const mensajesComprension = [
-        "Te entiendo. La situación está difícil para todos, pero sigues ahí, luchando.",
-        "No cualquiera hace lo que tú haces. Gracias por tu esfuerzo diario.",
-        "A veces uno se siente solo en esto, pero quiero que sepas que valoro tu trabajo.",
-        "Si hoy fue un día duro, mereces descansar. Lo has hecho bien."
-    ];
-    
-    function procesarMensaje(mensaje) {
-        const msg = mensaje.toLowerCase().trim();
-        let respuesta = "";
-        
-        // Reconocer nombre del inspector
-        const inspectoresList = ["yenni", "mae", "maritza", "miriam", "dallami", "adiuska", 
-                                 "zaida", "gerter", "rolando", "emelina", "mari", "ovidio", 
-                                 "joan", "rosita", "yeni"];
-        
-        for (let nombre of inspectoresList) {
-            if (msg.includes(nombre)) {
-                inspectorActual = nombre.charAt(0).toUpperCase() + nombre.slice(1);
-                localStorage.setItem('ultimoInspector', inspectorActual);
-                respuesta = `¡Hola ${inspectorActual}! 👋 Encantada de saludarte. ¿Cómo estás hoy? Cuéntame, ¿quieres desahogarte o necesitas ayuda con alguna multa?`;
-                agregarMensaje(respuesta, false);
-                return;
-            }
-        }
-        
-        // Conversación emocional/apoyo
-        if (msg.includes('cansado') || msg.includes('agotado') || msg.includes('harto') || msg.includes('estres')) {
-            respuesta = mensajesAnimo[Math.floor(Math.random() * mensajesAnimo.length)];
-        }
-        else if (msg.includes('triste') || msg.includes('mal') || msg.includes('difícil') || msg.includes('complicado')) {
-            respuesta = mensajesComprension[Math.floor(Math.random() * mensajesComprension.length)];
-        }
-        else if (msg.includes('gracias') || msg.includes('gracias por')) {
-            respuesta = "A ti por todo lo que haces. Si necesitas algo más, aquí estoy. 💚";
-        }
-        else if (msg.includes('hola') || msg.includes('buenas') || msg.includes('saludos')) {
-            if (inspectorActual) {
-                respuesta = `¡Hola de nuevo, ${inspectorActual}! ¿Cómo va tu jornada? ¿Necesitas apoyarte o registrar alguna multa?`;
-            } else {
-                respuesta = `¡Hola! Soy ${avatarActual.nombre} ${avatarActual.emoji}. ¿Cómo te llamas? Cuéntame cómo estás hoy.`;
-            }
-        }
-        else if (msg.includes('registrar multa') || msg.includes('nueva multa')) {
-            respuesta = "📋 Para registrar una multa rápido, usa el modo RÁPIDO (solo necesitas nombre, carnet y municipio). Si tienes más tiempo, usa el modo COMPLETO. ¿Necesitas que te guíe?";
-        }
-        else if (msg.includes('estadisticas') || msg.includes('cuantas multas')) {
-            const total = multasGuardadas.length;
-            const misMultas = inspectorActual ? multasGuardadas.filter(m => m.inspector === inspectorActual).length : 0;
-            respuesta = `📊 Llevamos ${total} multa(s) registradas en total. ${inspectorActual ? `Tú has registrado ${misMultas}. ¡Buen trabajo!` : ''}`;
-        }
-        else if (msg.includes('ayuda') || msg.includes('que puedes hacer')) {
-            respuesta = "🤗 Puedo:\n• Escucharte si necesitas desahogarte\n• Darte ánimo cuando estés cansado/a\n• Ayudarte a registrar multas\n• Decirte estadísticas\n\n¿Qué necesitas hoy?";
-        }
-        else if (msg.includes('como te llamas')) {
-            respuesta = `Soy ${avatarActual.nombre} ${avatarActual.emoji}. A veces también soy Betty. Estoy aquí para acompañarte en tu jornada.`;
-        }
-        else if (msg.includes('adios') || msg.includes('chao') || msg.includes('hasta luego')) {
-            respuesta = `Cuídate mucho, ${inspectorActual || "compañero/a"}. Que descanses. Nos vemos mañana. 💚`;
-            agregarMensaje(respuesta, false);
-            setTimeout(() => document.getElementById('chatWindow').classList.remove('open'), 2000);
-            return;
-        }
-        else if (msg.includes('como estas')) {
-            respuesta = `Estoy bien, gracias por preguntar. Lo importante es cómo estás tú. ¿Cómo te sientes hoy?`;
-        }
-        else {
-            if (inspectorActual) {
-                respuesta = `Te escucho, ${inspectorActual}. Si quieres desahogarte, dime. Si necesitas ayuda con multas, dime "registrar multa". ¿En qué te ayudo?`;
-            } else {
-                respuesta = `Cuéntame cómo te llamas y cómo estás hoy. Estoy aquí para conversar o para ayudarte con las multas.`;
-            }
-        }
-        
-        agregarMensaje(respuesta, false);
-    }
-    
-    function enviarMensaje() {
-        const input = document.getElementById('chatInput');
-        const msg = input.value.trim();
-        if (!msg) return;
-        
-        agregarMensaje(msg, true);
-        input.value = '';
-        procesarMensaje(msg);
-    }
-    
-    // Inicializar chat
-    function iniciarChat() {
-        cambiarAvatar();
-        setTimeout(() => {
-            agregarMensaje(`👋 Hola, soy ${avatarActual.nombre} ${avatarActual.emoji}. Estoy aquí para acompañarte en tu jornada.\n\nSi necesitas desahogarte, solo dime cómo te sientes. Si quieres registrar multas rápido, usa el formulario.\n\n¿Cómo estás hoy?`, false, ["Estoy cansado/a", "Necesito ayuda", "Registrar multa"]);
-        }, 300);
-    }
-    
-    // Eventos del chat
-    const chatBtn = document.getElementById('chatBtn');
-    const chatWindow = document.getElementById('chatWindow');
-    const closeBtn = document.getElementById('closeChatBtn');
-    const sendBtn = document.getElementById('sendChatBtn');
-    const chatInput = document.getElementById('chatInput');
-    
-    chatBtn.addEventListener('click', () => {
-        if (chatWindow.classList.contains('open')) {
-            chatWindow.classList.remove('open');
-        } else {
-            chatWindow.classList.add('open');
-            if (document.getElementById('chatMessages').children.length === 0) {
-                iniciarChat();
-            }
-        }
-    });
-    
-    closeBtn.addEventListener('click', () => chatWindow.classList.remove('open'));
-    sendBtn.addEventListener('click', enviarMensaje);
-    chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') enviarMensaje(); });
-    
-    // Cargar inspector previo
-    if (inspectorActual) {
-        const selectInspector = document.getElementById('inspector');
-        if (selectInspector) {
-            for (let i = 0; i < selectInspector.options.length; i++) {
-                if (selectInspector.options[i].text === inspectorActual) {
-                    selectInspector.selectedIndex = i;
-                    break;
-                }
-            }
-        }
-    }
 </script>
 
 </body>
