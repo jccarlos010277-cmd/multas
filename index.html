@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MINSAF - Registrar Multa</title>
+    <title>MINZAP - Registrar Multa</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -11,7 +11,7 @@
             font-family: 'Segoe UI', sans-serif;
             padding: 20px;
         }
-        .container { max-width: 500px; margin: 0 auto; }
+        .container { max-width: 550px; margin: 0 auto; }
         .card {
             background: white;
             border-radius: 20px;
@@ -64,9 +64,22 @@
             text-align: center;
             color: #2c3e50;
         }
-        .fecha-input {
-            background: white !important;
-            cursor: pointer;
+        .info-decreto {
+            background: #fff3cd;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-size: 12px;
+            border-left: 4px solid #ffc107;
+        }
+        .cuantia-auto {
+            background: #e8f4fd;
+            font-size: 11px;
+            text-align: center;
+            margin-top: -10px;
+            margin-bottom: 15px;
+            padding: 5px;
+            border-radius: 5px;
         }
     </style>
 </head>
@@ -74,7 +87,7 @@
     <div class="container">
         <div class="card">
             <div class="header">
-                <h1>🏛️ MINSAF - Dirección de Multas</h1>
+                <h1>🏛️ MINZAP - Dirección de Multas</h1>
                 <p>Habana Vieja | Registro de Infracciones</p>
             </div>
 
@@ -82,7 +95,7 @@
                 <div class="row">
                     <div>
                         <label>📅 FECHA (Día/Mes)</label>
-                        <input type="date" id="fecha" class="fecha-input" required>
+                        <input type="date" id="fecha" required>
                     </div>
                     <div>
                         <label>🎫 NÚMERO DE BOLETA</label>
@@ -103,17 +116,21 @@
                     </div>
                     <div>
                         <label>📌 ARTÍCULO</label>
-                        <input type="text" id="articulo" placeholder="Ej: 94" value="-">
+                        <input type="text" id="articulo" readonly style="background:#f0f0f0">
                     </div>
                     <div>
                         <label>✏️ INCISO</label>
-                        <input type="text" id="inciso" placeholder="Ej: b" value="-">
+                        <select id="inciso" required>
+                            <option value="">Seleccione</option>
+                        </select>
                     </div>
                 </div>
 
+                <div id="infoCuantia" class="cuantia-auto"></div>
+
                 <div>
                     <label>💰 CUANTÍA DE LA MULTA (CUP)</label>
-                    <input type="number" step="0.01" id="cuantia" placeholder="500.00" required>
+                    <input type="number" step="0.01" id="cuantia" placeholder="0.00" required>
                 </div>
 
                 <div>
@@ -156,10 +173,21 @@
                     <label>👮 INSPECTOR ACTUANTE</label>
                     <select id="inspector" required>
                         <option value="">Seleccione</option>
-                        <option>Mirta</option><option>Mae</option><option>Barbarita</option>
-                        <option>Dayami</option><option>Dadioska</option><option>Rolando</option>
-                        <option>Gerter</option><option>Maritza</option><option>Roxana</option>
-                        <option>Yeni</option>
+                        <optgroup label="🏥 A.S Tomas Romay">
+                            <option>Yenni</option><option>Mae</option>
+                        </optgroup>
+                        <optgroup label="🏥 A.S Diego Tamayo">
+                            <option>Maritza</option><option>Miriam</option>
+                        </optgroup>
+                        <optgroup label="🏥 A.S Guiteras">
+                            <option>Rolando</option>
+                        </optgroup>
+                        <optgroup label="🏥 A.S Aballi">
+                            <option>Adiuska</option><option>Dayami</option>
+                        </optgroup>
+                        <optgroup label="🏥 A.S Zulueta">
+                            <option>Gerter</option><option>Zaida</option>
+                        </optgroup>
                     </select>
                 </div>
 
@@ -173,18 +201,76 @@
     </div>
 
     <script>
-        // ⚠️ REEMPLAZA con la URL que copiaste de Apps Script
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby4QrSK6qz9klgAWUYVpkMD5_s3Ued6JQdr4k8Re9Z-pk-lgJaaCX3gUrfekaxuGmI/exec';
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AQUI_VA_TU_URL/exec';
         
-        // Fecha actual en formato YYYY-MM-DD para input date
+        // Configuración de decretos
+        const CONFIG = {
+            "18": { articulo: "94", incisos: ["b"], cuantiaFija: null },
+            "87": { articulo: "-", incisos: ["g", "h"], cuantias: { "g": 250, "h": 200 } },
+            "91": { articulo: "11.1", incisos: ["a", "b"], cuantiaFija: 2000 },
+            "272": { articulo: "18", incisos: ["r"], cuantiaFija: null }
+        };
+        
+        // Fecha actual
         const hoy = new Date();
         const año = hoy.getFullYear();
         const mes = String(hoy.getMonth() + 1).padStart(2, '0');
         const dia = String(hoy.getDate()).padStart(2, '0');
-        const fechaActual = `${año}-${mes}-${dia}`;
-        document.getElementById('fecha').value = fechaActual;
+        document.getElementById('fecha').value = `${año}-${mes}-${dia}`;
         
-        // Mostrar campo "Otro municipio"
+        // Elementos
+        const decretoSelect = document.getElementById('decreto');
+        const articuloInput = document.getElementById('articulo');
+        const incisoSelect = document.getElementById('inciso');
+        const cuantiaInput = document.getElementById('cuantia');
+        const infoCuantiaDiv = document.getElementById('infoCuantia');
+        
+        // Actualizar campos según decreto seleccionado
+        decretoSelect.addEventListener('change', function() {
+            const decreto = this.value;
+            if (decreto && CONFIG[decreto]) {
+                const config = CONFIG[decreto];
+                articuloInput.value = config.articulo;
+                
+                // Actualizar incisos
+                incisoSelect.innerHTML = '<option value="">Seleccione</option>';
+                config.incisos.forEach(inc => {
+                    incisoSelect.innerHTML += `<option value="${inc}">${inc}</option>`;
+                });
+                incisoSelect.disabled = false;
+                
+                // Configurar cuantía
+                if (config.cuantiaFija) {
+                    cuantiaInput.value = config.cuantiaFija;
+                    cuantiaInput.readOnly = true;
+                    infoCuantiaDiv.innerHTML = `💰 Cuantía fija para Decreto ${decreto}: $${config.cuantiaFija}`;
+                } else if (config.cuantias) {
+                    cuantiaInput.value = "";
+                    cuantiaInput.readOnly = false;
+                    infoCuantiaDiv.innerHTML = `💰 Decreto ${decreto}: Inciso g = $250 | Inciso h = $200`;
+                } else {
+                    cuantiaInput.value = "";
+                    cuantiaInput.readOnly = false;
+                    infoCuantiaDiv.innerHTML = `💰 Ingrese la cuantía manualmente`;
+                }
+            }
+            
+            // Auto-llenar cuantía si es Decreto 87 según inciso
+            if (decreto === "87") {
+                incisoSelect.addEventListener('change', function() {
+                    const inciso = this.value;
+                    if (inciso === "g") {
+                        cuantiaInput.value = 250;
+                    } else if (inciso === "h") {
+                        cuantiaInput.value = 200;
+                    }
+                });
+            }
+            
+            actualizarInfoDestino();
+        });
+        
+        // Municipio
         const municipioSelect = document.getElementById('municipio');
         const otroDiv = document.getElementById('otroMunicipioDiv');
         const otroInput = document.getElementById('otroMunicipio');
@@ -200,9 +286,6 @@
             actualizarInfoDestino();
         });
         
-        const decretoSelect = document.getElementById('decreto');
-        decretoSelect.addEventListener('change', actualizarInfoDestino);
-        
         function actualizarInfoDestino() {
             const decreto = decretoSelect.value;
             let municipio = municipioSelect.value;
@@ -211,7 +294,7 @@
             }
             
             const infoDiv = document.getElementById('infoDestino');
-            if (decreto && municipio) {
+            if (decreto && municipio && municipio !== "?" && municipio !== "") {
                 const esHabanaVieja = municipio === 'Habana Vieja';
                 const destino = esHabanaVieja ? `${decreto}_HabanaVieja` : `${decreto}_OtrosMunicipios`;
                 infoDiv.innerHTML = `📌 La multa irá a la hoja: <strong>${destino}</strong>`;
@@ -237,7 +320,6 @@
                 }
             }
             
-            // ✅ Convertir fecha de YYYY-MM-DD a DD/MM (solo día y mes)
             const fechaParts = document.getElementById('fecha').value.split('-');
             const fechaFormateada = `${fechaParts[2]}/${fechaParts[1]}`;
             
@@ -247,10 +329,10 @@
             const datos = {
                 fecha: fechaFormateada,
                 boleta: document.getElementById('boleta').value,
-                decreto: document.getElementById('decreto').value,
-                articulo: document.getElementById('articulo').value || '-',
-                inciso: document.getElementById('inciso').value || '-',
-                cuantia: document.getElementById('cuantia').value,
+                decreto: decretoSelect.value,
+                articulo: articuloInput.value,
+                inciso: incisoSelect.value,
+                cuantia: cuantiaInput.value,
                 infractor: document.getElementById('infractor').value,
                 ci: document.getElementById('ci').value,
                 municipio: municipioFinal,
@@ -270,9 +352,7 @@
                 alert(`✅ Multa registrada exitosamente!\n\n📄 Hoja destino: ${hojaDestino}`);
                 
                 form.reset();
-                document.getElementById('fecha').value = fechaActual;
-                document.getElementById('articulo').value = '-';
-                document.getElementById('inciso').value = '-';
+                document.getElementById('fecha').value = `${año}-${mes}-${dia}`;
                 document.getElementById('boleta').focus();
                 otroDiv.style.display = 'none';
                 
