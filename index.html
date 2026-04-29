@@ -3,136 +3,231 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Inspección Sanitaria</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>MINSAF - Registro de Multas</title>
     <style>
-        :root { --primary-color: #2c3e50; }
-        body { background-color: #f0f2f5; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        .header-app { background: var(--primary-color); color: white; padding: 20px; border-radius: 0 0 20px 20px; margin-bottom: 20px; }
-        .card { border: none; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-        .btn-check:checked + .btn-outline-primary { background-color: #0d6efd; color: white; }
-        .btn-submit { background-color: #27ae60; border: none; padding: 15px; font-weight: bold; font-size: 1.1rem; }
-        .btn-submit:active { transform: scale(0.98); }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .container { max-width: 700px; margin: 0 auto; }
+        .card {
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        .header h1 { font-size: 24px; margin-bottom: 5px; }
+        .header p { opacity: 0.9; font-size: 14px; }
+        .form-body { padding: 30px; }
+        .form-group { margin-bottom: 20px; }
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-size: 14px;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #2c3e50;
+        }
+        .row { display: flex; gap: 15px; }
+        .row .form-group { flex: 1; }
+        button {
+            width: 100%;
+            padding: 15px;
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: #219a52;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(39,174,96,0.3);
+        }
+        button:disabled {
+            background: #95a5a6;
+            transform: none;
+        }
+        .info {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #7f8c8d;
+            text-align: center;
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .card { box-shadow: none; }
+            .header, button, .info { display: none; }
+            .form-body { padding: 0; }
+            input, select { border: none; padding: 5px; }
+        }
     </style>
 </head>
 <body>
-
-<div class="header-app text-center shadow">
-    <h2>Control de Inspecciones</h2>
-    <p class="mb-0">Municipio Habana Vieja</p>
-</div>
-
-<div class="container mb-5">
-    <div class="card p-4">
-        <form id="formInspeccion">
-            <div class="mb-4">
-                <label class="form-label fw-bold">Inspector Actuante</label>
-                <select class="form-select form-select-lg" id="inspector" required>
-                    <option value="">Seleccione su nombre...</option>
-                    <option>Mirta</option>
-                    <option>Mae</option>
-                    <option>Barbarita</option>
-                    <option>Dayami</option>
-                    <option>Dadioska</option>
-                    <option>Rolando</option>
-                    <option>Gerter</option>
-                    <option>Maritza</option>
-                    <option>Roxana</option>
-                    <option>Yeni</option>
-                </select>
+    <div class="container">
+        <div class="card">
+            <div class="header">
+                <h1>🏛️ MINSAF - Dirección de Multas</h1>
+                <p>Habana Vieja | Código: 352-2304</p>
             </div>
+            <div class="form-body">
+                <form id="multaForm">
+                    <div class="row">
+                        <div class="form-group">
+                            <label>📅 FECHA</label>
+                            <input type="text" id="fecha" readonly style="background:#f5f5f5">
+                        </div>
+                        <div class="form-group">
+                            <label>🎫 CÓDIGO BOLETA</label>
+                            <input type="text" id="boleta" placeholder="Ej: CB542068" required>
+                        </div>
+                    </div>
 
-            <div class="mb-4">
-                <label class="form-label fw-bold d-block">Tipo de Higiene</label>
-                <div class="btn-group w-100" role="group">
-                    <input type="radio" class="btn-check" name="higiene" id="ha" value="HA" required>
-                    <label class="btn btn-outline-primary p-3" for="ha">Alimentos (HA)</label>
-                    <input type="radio" class="btn-check" name="higiene" id="he" value="HE">
-                    <label class="btn btn-outline-primary p-3" for="he">Epidem. (HE)</label>
-                    <input type="radio" class="btn-check" name="higiene" id="hc" value="HC">
-                    <label class="btn btn-outline-primary p-3" for="hc">Comunal (HC)</label>
+                    <div class="row">
+                        <div class="form-group">
+                            <label>⚖️ DECRETO</label>
+                            <select id="imposicion" required>
+                                <option value="">Seleccione</option>
+                                <option value="18">Decreto 18</option>
+                                <option value="87">Decreto 87</option>
+                                <option value="91">Decreto 91</option>
+                                <option value="272">Decreto 272</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>📌 ARTÍCULO</label>
+                            <input type="text" id="articulo" value="-">
+                        </div>
+                        <div class="form-group">
+                            <label>✏️ INCISO</label>
+                            <input type="text" id="inciso" value="-">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group">
+                            <label>💰 CUANTÍA (CUP)</label>
+                            <input type="number" step="0.01" id="cuantia" placeholder="500.00" required>
+                        </div>
+                        <div class="form-group">
+                            <label>👤 NOMBRE DEL INFRACTOR</label>
+                            <input type="text" id="infractor" placeholder="Nombre y Apellidos" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group">
+                            <label>🆔 CARNET DE IDENTIDAD</label>
+                            <input type="text" id="ci" placeholder="Ej: 80010112345" required>
+                        </div>
+                        <div class="form-group">
+                            <label>📍 MUNICIPIO DE RESIDENCIA</label>
+                            <input type="text" id="municipio" placeholder="Habana Vieja, Guanatánamo, etc." required>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="btnSubmit">
+                        ✅ REGISTRAR MULTA E IMPRIMIR
+                    </button>
+                </form>
+
+                <div class="info">
+                    📄 Al registrar se generarán DOS copias en hoja tamaño carta.<br>
+                    La copia inferior incluye espacio para RECIBÍ CONFORME y SELLO.
                 </div>
             </div>
-
-            <div class="row g-3 mb-4">
-                <div class="col-6">
-                    <label class="form-label small fw-bold">Código (Boletín)</label>
-                    <input type="text" class="form-control" id="codigo" placeholder="BM123456" required>
-                </div>
-                <div class="col-6">
-                    <label class="form-label small fw-bold">Decreto</label>
-                    <select class="form-select" id="decreto" required>
-                        <option>87</option>
-                        <option>272</option>
-                        <option>18</option>
-                        <option>45</option>
-                        <option>201</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label fw-bold">Datos del Infractor</label>
-                <input type="text" class="form-control mb-2" id="nombre" placeholder="Nombre Completo" required>
-                <input type="number" class="form-control mb-2" id="ci" placeholder="Carnet de Identidad" required>
-                <input type="text" class="form-control" id="centro" placeholder="Centro de Trabajo / Mipyme" required>
-            </div>
-
-            <div class="mb-4">
-                <input type="text" class="form-control mb-2" id="direccion" placeholder="Dirección del hecho" required>
-                <div class="input-group">
-                    <span class="input-group-text">$</span>
-                    <input type="number" class="form-control" id="importe" placeholder="Importe de la multa" required>
-                </div>
-            </div>
-
-            <button type="submit" class="btn btn-success w-100 btn-submit shadow">REGISTRAR EN TABLA INTEGRAL</button>
-        </form>
+        </div>
     </div>
-</div>
 
-<script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbw6dMd5Eiec9pcV-mrIqdU-RibLXbCqpkDnzuuy9XGRHds07shy6sR0eFxMcXO--l_9/exec'; // <--- PEGA AQUÍ LA URL DEL PASO 1
-    const form = document.getElementById('formInspeccion');
-
-    form.addEventListener('submit', e => {
-        e.preventDefault();
-        const btn = e.target.querySelector('button');
-        btn.disabled = true;
-        btn.innerText = 'Enviando datos...';
-
-        const data = {
-            inspector: document.getElementById('inspector').value,
-            higiene: document.querySelector('input[name="higiene"]:checked').value,
-            codigo: document.getElementById('codigo').value,
-            decreto: document.getElementById('decreto').value,
-            nombre: document.getElementById('nombre').value,
-            ci: document.getElementById('ci').value,
-            centro: document.getElementById('centro').value,
-            direccion: document.getElementById('direccion').value,
-            importe: document.getElementById('importe').value,
-            articulo: "N/A", // Se pueden añadir más campos según necesites
-            inciso: "N/A"
-        };
-
-        fetch(scriptURL, { 
-            method: 'POST', 
-            mode: 'no-cors', // Necesario para Google Apps Script
-            cache: 'no-cache',
-            body: JSON.stringify(data)
-        })
-        .then(() => {
-            alert('¡Registro exitoso!');
-            form.reset();
-            btn.disabled = false;
-            btn.innerText = 'REGISTRAR EN TABLA INTEGRAL';
-        })
-        .catch(error => {
-            alert('Error al enviar');
-            btn.disabled = false;
+    <script>
+        // ⚠️ IMPORTANTE: Reemplaza con la URL que copiaste al desplegar
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyuTPKgYpieyXqwyQIeb8FoF6UndoQ5dXGJDDyAus2aZPUNLdrdBVq7NM5CeVmdQxQPBw/exec';
+        
+        function obtenerFecha() {
+            const hoy = new Date();
+            const dia = String(hoy.getDate()).padStart(2, '0');
+            const mes = String(hoy.getMonth() + 1).padStart(2, '0');
+            return `${dia}/${mes}`;
+        }
+        
+        document.getElementById('fecha').value = obtenerFecha();
+        
+        const form = document.getElementById('multaForm');
+        const btn = document.getElementById('btnSubmit');
+        
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            btn.disabled = true;
+            btn.innerHTML = '⏳ Registrando multa...';
+            
+            const datos = {
+                fecha: document.getElementById('fecha').value,
+                boleta: document.getElementById('boleta').value,
+                imposicion: document.getElementById('imposicion').value,
+                articulo: document.getElementById('articulo').value || '-',
+                inciso: document.getElementById('inciso').value || '-',
+                cuantia: document.getElementById('cuantia').value,
+                infractor: document.getElementById('infractor').value,
+                ci: document.getElementById('ci').value,
+                municipio: document.getElementById('municipio').value
+            };
+            
+            try {
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: JSON.stringify(datos)
+                });
+                
+                alert('✅ Multa registrada exitosamente\n\n📄 Ahora puedes imprimir (Ctrl+P)');
+                
+                form.reset();
+                document.getElementById('fecha').value = obtenerFecha();
+                document.getElementById('articulo').value = '-';
+                document.getElementById('inciso').value = '-';
+                document.getElementById('boleta').focus();
+                
+                setTimeout(() => {
+                    if (confirm('¿Deseas imprimir ahora la multa?')) {
+                        window.print();
+                    }
+                }, 500);
+                
+            } catch (error) {
+                alert('❌ Error: ' + error.message);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '✅ REGISTRAR MULTA E IMPRIMIR';
+            }
         });
-    });
-</script>
-
+    </script>
 </body>
 </html>
