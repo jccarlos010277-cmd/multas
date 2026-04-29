@@ -81,7 +81,7 @@
             <form id="multaForm">
                 <div class="row">
                     <div>
-                        <label>📅 FECHA (editable)</label>
+                        <label>📅 FECHA (Día/Mes)</label>
                         <input type="date" id="fecha" class="fecha-input" required>
                     </div>
                     <div>
@@ -174,7 +174,7 @@
 
     <script>
         // ⚠️ REEMPLAZA con la URL que copiaste de Apps Script
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx7X84i8AGv3Ec5WPzxWBpjp4qkcDy9wZIDMjqHRo9H4znsGwIXbjDrLAY_1grezNrb/exec';
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzFssZoxoI-jHsadBZs5il3DKXm6st0TV-rwm6iQPfd4y0eaBRLr1zJquKt7qCxH1-y/exec';
         
         // Fecha actual en formato YYYY-MM-DD para input date
         const hoy = new Date();
@@ -214,7 +214,7 @@
             if (decreto && municipio) {
                 const esHabanaVieja = municipio === 'Habana Vieja';
                 const destino = esHabanaVieja ? `${decreto}_HabanaVieja` : `${decreto}_OtrosMunicipios`;
-                infoDiv.innerHTML = `📌 La multa irá a la hoja: <strong>${destino}</strong><br>📊 El contador del inspector se actualizará automáticamente`;
+                infoDiv.innerHTML = `📌 La multa irá a la hoja: <strong>${destino}</strong>`;
                 infoDiv.style.background = "#d4edda";
             } else {
                 infoDiv.innerHTML = "📌 Seleccione Decreto y Municipio para ver el destino";
@@ -237,9 +237,9 @@
                 }
             }
             
-            // Convertir fecha de YYYY-MM-DD a DD/MM/YYYY
-            const fechaInput = document.getElementById('fecha').value;
-            const fechaFormateada = fechaInput.split('-').reverse().join('/');
+            // ✅ Convertir fecha de YYYY-MM-DD a DD/MM (solo día y mes)
+            const fechaParts = document.getElementById('fecha').value.split('-');
+            const fechaFormateada = `${fechaParts[2]}/${fechaParts[1]}`;
             
             btn.disabled = true;
             btn.innerHTML = '⏳ Registrando multa...';
@@ -267,7 +267,7 @@
                 const esHabanaVieja = municipioFinal === 'Habana Vieja';
                 const hojaDestino = esHabanaVieja ? `${datos.decreto}_HabanaVieja` : `${datos.decreto}_OtrosMunicipios`;
                 
-                alert(`✅ Multa registrada exitosamente!\n\n📄 Hoja destino: ${hojaDestino}\n👮 Contador del inspector actualizado`);
+                alert(`✅ Multa registrada exitosamente!\n\n📄 Hoja destino: ${hojaDestino}`);
                 
                 form.reset();
                 document.getElementById('fecha').value = fechaActual;
