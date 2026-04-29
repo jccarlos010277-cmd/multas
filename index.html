@@ -64,6 +64,10 @@
             text-align: center;
             color: #2c3e50;
         }
+        .fecha-input {
+            background: white !important;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -77,8 +81,8 @@
             <form id="multaForm">
                 <div class="row">
                     <div>
-                        <label>📅 FECHA</label>
-                        <input type="text" id="fecha" readonly style="background:#f0f0f0">
+                        <label>📅 FECHA (editable)</label>
+                        <input type="date" id="fecha" class="fecha-input" required>
                     </div>
                     <div>
                         <label>🎫 NÚMERO DE BOLETA</label>
@@ -148,17 +152,15 @@
                     <input type="text" id="otroMunicipio" placeholder="Ej: Santiago de Cuba">
                 </div>
 
-                <div class="row">
-                    <div>
-                        <label>👮 INSPECTOR ACTUANTE</label>
-                        <select id="inspector" required>
-                            <option value="">Seleccione</option>
-                            <option>Mirta</option><option>Mae</option><option>Barbarita</option>
-                            <option>Dayami</option><option>Dadioska</option><option>Rolando</option>
-                            <option>Gerter</option><option>Maritza</option><option>Roxana</option>
-                            <option>Yeni</option>
-                        </select>
-                    </div>
+                <div>
+                    <label>👮 INSPECTOR ACTUANTE</label>
+                    <select id="inspector" required>
+                        <option value="">Seleccione</option>
+                        <option>Mirta</option><option>Mae</option><option>Barbarita</option>
+                        <option>Dayami</option><option>Dadioska</option><option>Rolando</option>
+                        <option>Gerter</option><option>Maritza</option><option>Roxana</option>
+                        <option>Yeni</option>
+                    </select>
                 </div>
 
                 <button type="submit" id="btnSubmit">✅ REGISTRAR MULTA</button>
@@ -172,14 +174,15 @@
 
     <script>
         // ⚠️ REEMPLAZA con la URL que copiaste de Apps Script
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx3XB62izMMzLo2ktvA4cPg3mK3VghjGm_w9XL6O6ZK4u1lZypVIu6ieBeHlbbIrp2Z/exec';
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby6l2LxQMHr7bK77zDmxiwWQQ_RbLkyGgzZ7nawODP01RnEWIbvbhCHlt2SODwSh4Oj/exec';
         
-        // Fecha automática
+        // Fecha actual en formato YYYY-MM-DD para input date
         const hoy = new Date();
-        const dia = String(hoy.getDate()).padStart(2, '0');
-        const mes = String(hoy.getMonth() + 1).padStart(2, '0');
         const año = hoy.getFullYear();
-        document.getElementById('fecha').value = `${dia}/${mes}/${año}`;
+        const mes = String(hoy.getMonth() + 1).padStart(2, '0');
+        const dia = String(hoy.getDate()).padStart(2, '0');
+        const fechaActual = `${año}-${mes}-${dia}`;
+        document.getElementById('fecha').value = fechaActual;
         
         // Mostrar campo "Otro municipio"
         const municipioSelect = document.getElementById('municipio');
@@ -211,7 +214,7 @@
             if (decreto && municipio) {
                 const esHabanaVieja = municipio === 'Habana Vieja';
                 const destino = esHabanaVieja ? `${decreto}_HabanaVieja` : `${decreto}_OtrosMunicipios`;
-                infoDiv.innerHTML = `📌 La multa irá a la hoja: <strong>${destino}</strong>`;
+                infoDiv.innerHTML = `📌 La multa irá a la hoja: <strong>${destino}</strong><br>📊 El contador del inspector se actualizará automáticamente`;
                 infoDiv.style.background = "#d4edda";
             } else {
                 infoDiv.innerHTML = "📌 Seleccione Decreto y Municipio para ver el destino";
@@ -234,11 +237,15 @@
                 }
             }
             
+            // Convertir fecha de YYYY-MM-DD a DD/MM/YYYY
+            const fechaInput = document.getElementById('fecha').value;
+            const fechaFormateada = fechaInput.split('-').reverse().join('/');
+            
             btn.disabled = true;
             btn.innerHTML = '⏳ Registrando multa...';
             
             const datos = {
-                fecha: document.getElementById('fecha').value,
+                fecha: fechaFormateada,
                 boleta: document.getElementById('boleta').value,
                 decreto: document.getElementById('decreto').value,
                 articulo: document.getElementById('articulo').value || '-',
@@ -260,10 +267,10 @@
                 const esHabanaVieja = municipioFinal === 'Habana Vieja';
                 const hojaDestino = esHabanaVieja ? `${datos.decreto}_HabanaVieja` : `${datos.decreto}_OtrosMunicipios`;
                 
-                alert(`✅ Multa registrada exitosamente!\n\n📄 Hoja destino: ${hojaDestino}\n🔄 Fila: nueva al final`);
+                alert(`✅ Multa registrada exitosamente!\n\n📄 Hoja destino: ${hojaDestino}\n👮 Contador del inspector actualizado`);
                 
                 form.reset();
-                document.getElementById('fecha').value = `${dia}/${mes}/${año}`;
+                document.getElementById('fecha').value = fechaActual;
                 document.getElementById('articulo').value = '-';
                 document.getElementById('inciso').value = '-';
                 document.getElementById('boleta').focus();
