@@ -15,7 +15,6 @@
             padding: 20px;
         }
         
-        /* Pantalla de Login */
         .login-screen {
             max-width: 400px;
             margin: 100px auto;
@@ -26,15 +25,8 @@
             text-align: center;
         }
         
-        .login-screen h1 {
-            color: #2c3e50;
-            margin-bottom: 10px;
-        }
-        
-        .login-screen p {
-            color: #666;
-            margin-bottom: 25px;
-        }
+        .login-screen h1 { color: #2c3e50; margin-bottom: 10px; }
+        .login-screen p { color: #666; margin-bottom: 25px; }
         
         .login-avatar {
             display: flex;
@@ -73,7 +65,6 @@
         
         .login-btn:hover { background: #219a52; }
         
-        /* Contenido principal */
         .main-content {
             display: none;
             max-width: 550px;
@@ -174,7 +165,6 @@
             width: auto;
         }
         
-        /* CHATBOT FLOTANTE */
         .chatbot-float {
             position: fixed;
             bottom: 25px;
@@ -197,15 +187,8 @@
             justify-content: center;
         }
         
-        .chatbot-toggle:hover {
-            transform: scale(1.05);
-        }
-        
-        .chatbot-toggle img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        .chatbot-toggle:hover { transform: scale(1.05); }
+        .chatbot-toggle img { width: 100%; height: 100%; object-fit: cover; }
         
         .chatbot-window {
             position: fixed;
@@ -222,9 +205,7 @@
             z-index: 999;
         }
         
-        .chatbot-window.open {
-            display: flex;
-        }
+        .chatbot-window.open { display: flex; }
         
         .chatbot-header {
             background: #2c3e50;
@@ -242,26 +223,11 @@
             overflow: hidden;
         }
         
-        .chatbot-header-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        .chatbot-header-avatar img { width: 100%; height: 100%; object-fit: cover; }
         
-        .chatbot-header-info {
-            flex: 1;
-        }
-        
-        .chatbot-header-info h4 {
-            font-size: 14px;
-            margin: 0;
-        }
-        
-        .chatbot-header-info p {
-            font-size: 10px;
-            opacity: 0.8;
-            margin: 0;
-        }
+        .chatbot-header-info { flex: 1; }
+        .chatbot-header-info h4 { font-size: 14px; margin: 0; }
+        .chatbot-header-info p { font-size: 10px; opacity: 0.8; margin: 0; }
         
         .chatbot-close {
             background: none;
@@ -289,14 +255,8 @@
             max-width: 90%;
         }
         
-        .chatbot-message.bot {
-            align-self: flex-start;
-        }
-        
-        .chatbot-message.user {
-            align-self: flex-end;
-            flex-direction: row-reverse;
-        }
+        .chatbot-message.bot { align-self: flex-start; }
+        .chatbot-message.user { align-self: flex-end; flex-direction: row-reverse; }
         
         .chatbot-message-avatar {
             width: 32px;
@@ -306,11 +266,7 @@
             flex-shrink: 0;
         }
         
-        .chatbot-message-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        .chatbot-message-avatar img { width: 100%; height: 100%; object-fit: cover; }
         
         .chatbot-message-bubble {
             background: white;
@@ -347,10 +303,7 @@
             display: inline-block !important;
         }
         
-        .chatbot-option-btn:hover {
-            background: #1a252f !important;
-            transform: scale(1.02);
-        }
+        .chatbot-option-btn:hover { background: #1a252f !important; transform: scale(1.02); }
         
         .chatbot-input-area {
             padding: 12px;
@@ -379,9 +332,7 @@
             cursor: pointer;
         }
         
-        .chatbot-send:hover {
-            background: #219a52;
-        }
+        .chatbot-send:hover { background: #219a52; }
         
         .typing-indicator {
             display: flex;
@@ -434,9 +385,6 @@
             <option value="Gerter">Gerter</option>
             <option value="Zaida">Zaida</option>
         </optgroup>
-         <optgroup label="🏥 UMHE">
-            <option value="Rosita">Rosita</option>
-           </optgroup>
     </select>
     <input type="password" id="passwordInput" class="login-password" placeholder="Contraseña personal">
     <button class="login-btn" onclick="iniciarSesion()">🔓 Ingresar al Sistema</button>
@@ -461,11 +409,11 @@
         <form id="multaForm">
             <div class="row">
                 <div>
-                    <label>📅 FECHA</label>
-                    <input type="date" id="fecha" required>
+                    <label>📅 FECHA (DD/MM)</label>
+                    <input type="text" id="fecha" placeholder="27/04" required>
                 </div>
                 <div>
-                    <label>🎫 BOLETA</label>
+                    <label>🎫 BOLETA (CB + 6 dígitos)</label>
                     <input type="text" id="boleta" placeholder="CB542068" required>
                 </div>
             </div>
@@ -561,9 +509,7 @@
             </div>
             <button class="chatbot-close" id="chatbotClose">✕</button>
         </div>
-        <div class="chatbot-messages" id="chatbotMessages">
-            <!-- Solo el mensaje inicial se agregará dinámicamente -->
-        </div>
+        <div class="chatbot-messages" id="chatbotMessages"></div>
         <div class="chatbot-input-area">
             <input type="text" class="chatbot-input" id="chatbotInput" placeholder="Escribe tu mensaje...">
             <button class="chatbot-send" id="chatbotSend">Enviar ➤</button>
@@ -587,11 +533,9 @@
         "Adiuska": "adiuska2024",
         "Dayami": "dayami2024",
         "Gerter": "gerter2024",
-        "Zaida": "zaida2024",
-        "Rosita": "rosita2024"
+        "Zaida": "zaida2024"
     };
     
-    // Configuración de decretos
     const CONFIG_DECRETOS = {
         "18": { articulo: "94", incisos: ["b"], cuantiaFija: null },
         "87": { articulo: "-", incisos: ["g", "h"], cuantias: { "g": 250, "h": 200 } },
@@ -607,12 +551,13 @@
     ];
     let avatarIndex = 0;
     let chatAbierto = false;
-    let mensajesInicialesAgregados = false;
     
     let chatEstado = {
         activo: false,
         paso: "inicio",
-        datos: {}
+        datos: {
+            inspector: ""
+        }
     };
     
     // ============================================================
@@ -640,20 +585,13 @@
         
         ultimaActividad = new Date();
         
-        const hora = new Date().getHours();
-        let saludo = "Buenos días";
-        if (hora >= 12 && hora < 19) saludo = "Buenas tardes";
-        if (hora >= 19) saludo = "Buenas noches";
-        
-        // Guardar que el chat aún no tiene mensajes
-        mensajesInicialesAgregados = false;
-        
+        // Fecha actual en formato DD/MM
         const hoy = new Date();
-        const año = hoy.getFullYear();
-        const mes = String(hoy.getMonth() + 1).padStart(2, '0');
         const dia = String(hoy.getDate()).padStart(2, '0');
-        document.getElementById('fecha').value = `${año}-${mes}-${dia}`;
+        const mes = String(hoy.getMonth() + 1).padStart(2, '0');
+        document.getElementById('fecha').value = `${dia}/${mes}`;
         
+        // Generar boleta automática CB + 6 dígitos
         generarBoletaAuto();
     }
     
@@ -760,14 +698,8 @@
             }
         }
         
-        const fechaParts = document.getElementById('fecha').value.split('-');
-        const fechaFormateada = `${fechaParts[2]}/${fechaParts[1]}`;
-        
-        btn.disabled = true;
-        btn.innerHTML = '⏳ Registrando...';
-        
         const datos = {
-            fecha: fechaFormateada,
+            fecha: document.getElementById('fecha').value,
             boleta: document.getElementById('boleta').value,
             decreto: decretoSelect.value,
             articulo: articuloInput.value,
@@ -779,6 +711,9 @@
             inspector: inspectorActual
         };
         
+        btn.disabled = true;
+        btn.innerHTML = '⏳ Registrando...';
+        
         try {
             await fetch(SCRIPT_URL, {
                 method: 'POST',
@@ -789,7 +724,10 @@
             alert('✅ Multa registrada exitosamente!');
             
             form.reset();
-            document.getElementById('fecha').value = `${new Date().getFullYear()}-${String(new Date().getMonth()+1).padStart(2,'0')}-${String(new Date().getDate()).padStart(2,'0')}`;
+            const hoy = new Date();
+            const dia = String(hoy.getDate()).padStart(2, '0');
+            const mes = String(hoy.getMonth() + 1).padStart(2, '0');
+            document.getElementById('fecha').value = `${dia}/${mes}`;
             generarBoletaAuto();
             otroDiv.style.display = 'none';
             
@@ -799,9 +737,8 @@
                     { texto: "🔒 Cerrar", accion: "chatbotCerrar" }
                 ]);
             }
-            
         } catch (error) {
-            alert('❌ Error al registrar la multa');
+            alert('❌ Error al registrar');
         } finally {
             btn.disabled = false;
             btn.innerHTML = '✅ REGISTRAR MULTA';
@@ -809,7 +746,7 @@
     });
     
     // ============================================================
-    // CHATBOT
+    // CHATBOT - Flujo completo con FECHA y BOLETA
     // ============================================================
     const chatbotToggle = document.getElementById('chatbotToggle');
     const chatbotWindow = document.getElementById('chatbotWindow');
@@ -823,7 +760,6 @@
             chatbotWindow.classList.remove('open');
             chatAbierto = false;
         } else {
-            // Limpiar mensajes anteriores solo si no hay inspector (nunca debería pasar)
             if (!inspectorActual) {
                 alert('Primero debe iniciar sesión');
                 return;
@@ -832,7 +768,6 @@
             chatbotWindow.classList.add('open');
             chatAbierto = true;
             
-            // Solo agregar mensaje inicial si no hay mensajes
             if (chatbotMessages.children.length === 0) {
                 const hora = new Date().getHours();
                 let saludo = "";
@@ -846,7 +781,6 @@
                 ]);
             }
             
-            // Verificar si pasó más de 1 hora
             if (ultimaActividad) {
                 const ahora = new Date();
                 const diffHoras = (ahora - ultimaActividad) / (1000 * 60 * 60);
@@ -874,9 +808,7 @@
     });
     
     chatbotInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            chatbotSend.click();
-        }
+        if (e.key === 'Enter') chatbotSend.click();
     });
     
     function agregarMensajeChatbot(texto, esUsuario = false, opciones = null) {
@@ -931,22 +863,54 @@
     }
     
     function chatbotIniciarRegistro() {
+        const fechaActual = document.getElementById('fecha').value;
+        const boletaActual = document.getElementById('boleta').value;
+        
         chatEstado = {
             activo: true,
-            paso: "esperando_decreto",
+            paso: "esperando_fecha",
             datos: {
-                fecha: document.getElementById('fecha').value.split('-').reverse().slice(0,2).join('/'),
-                boleta: document.getElementById('boleta').value,
-                inspector: inspectorActual
+                inspector: inspectorActual,
+                fecha: "",
+                boleta: "",
+                decreto: "",
+                articulo: "",
+                inciso: "",
+                cuantia: "",
+                infractor: "",
+                ci: "",
+                municipio: ""
             }
         };
         
-        agregarMensajeChatbot("Vamos a registrar una multa paso a paso. 📝\n\n¿Cuál es el DECRETO? (18, 87, 91 o 272)", false, [
+        agregarMensajeChatbot("Vamos a registrar una multa paso a paso. 📝\n\n📅 **Paso 1:** ¿Cuál es la FECHA de la infracción? (formato DD/MM, ej: 27/04)", false, [
+            { texto: `Usar hoy (${fechaActual})`, accion: `chatbotUsarFecha('${fechaActual}')` }
+        ]);
+    }
+    
+    function chatbotUsarFecha(fecha) {
+        chatEstado.datos.fecha = fecha;
+        agregarMensajeChatbot(`✅ Fecha: ${fecha}\n\n🎫 **Paso 2:** ¿NÚMERO DE BOLETA? (formato CB + 6 dígitos, ej: CB542068)`, false, [
+            { texto: "Generar automático", accion: "chatbotGenerarBoleta" }
+        ]);
+        chatEstado.paso = "esperando_boleta";
+    }
+    
+    function chatbotGenerarBoleta() {
+        const fecha = new Date();
+        const año = fecha.getFullYear();
+        const mes = String(fecha.getMonth() + 1).padStart(2, '0');
+        const dia = String(fecha.getDate()).padStart(2, '0');
+        const random = Math.floor(Math.random() * 9000 + 1000);
+        const boleta = `CB${año}${mes}${dia}${random}`;
+        chatEstado.datos.boleta = boleta;
+        agregarMensajeChatbot(`✅ Boleta generada: ${boleta}\n\n⚖️ **Paso 3:** ¿Cuál es el DECRETO? (18, 87, 91 o 272)`, false, [
             { texto: "Decreto 18", accion: "chatbotSeleccionarDecreto('18')" },
             { texto: "Decreto 87", accion: "chatbotSeleccionarDecreto('87')" },
             { texto: "Decreto 91", accion: "chatbotSeleccionarDecreto('91')" },
             { texto: "Decreto 272", accion: "chatbotSeleccionarDecreto('272')" }
         ]);
+        chatEstado.paso = "esperando_decreto";
     }
     
     function chatbotSeleccionarDecreto(decreto) {
@@ -958,7 +922,7 @@
             chatEstado.datos.inciso = config.incisos[0];
             procesarIncisoChatbot();
         } else {
-            agregarMensajeChatbot(`Decreto ${decreto} seleccionado.\n\n¿Qué INCISO corresponde?`, false, 
+            agregarMensajeChatbot(`Decreto ${decreto} seleccionado.\n\n✏️ **Paso 4:** ¿Qué INCISO corresponde?`, false, 
                 config.incisos.map(inc => ({ texto: `Inciso ${inc}${inc === 'g' ? ' ($250)' : inc === 'h' ? ' ($200)' : ''}`, accion: `chatbotSeleccionarInciso('${inc}')` })));
             chatEstado.paso = "esperando_inciso";
         }
@@ -974,14 +938,14 @@
         
         if (config.cuantiaFija) {
             chatEstado.datos.cuantia = config.cuantiaFija;
-            agregarMensajeChatbot(`✔️ Inciso ${chatEstado.datos.inciso} seleccionado. Cuantía fija: $${config.cuantiaFija}\n\nAhora, ¿NOMBRE Y APELLIDOS del infractor?`, false);
+            agregarMensajeChatbot(`✔️ Inciso ${chatEstado.datos.inciso} seleccionado. Cuantía fija: $${config.cuantiaFija}\n\n👤 **Paso 5:** ¿NOMBRE Y APELLIDOS del infractor?`, false);
             chatEstado.paso = "esperando_infractor";
         } else if (config.cuantias && config.cuantias[chatEstado.datos.inciso]) {
             chatEstado.datos.cuantia = config.cuantias[chatEstado.datos.inciso];
-            agregarMensajeChatbot(`✔️ Inciso ${chatEstado.datos.inciso} seleccionado. Cuantía: $${chatEstado.datos.cuantia}\n\nAhora, ¿NOMBRE Y APELLIDOS del infractor?`, false);
+            agregarMensajeChatbot(`✔️ Inciso ${chatEstado.datos.inciso} seleccionado. Cuantía: $${chatEstado.datos.cuantia}\n\n👤 **Paso 5:** ¿NOMBRE Y APELLIDOS del infractor?`, false);
             chatEstado.paso = "esperando_infractor";
         } else {
-            agregarMensajeChatbot(`✔️ Inciso ${chatEstado.datos.inciso} seleccionado.\n\n💰 ¿Cuál es el IMPORTE de la multa en CUP?`, false);
+            agregarMensajeChatbot(`✔️ Inciso ${chatEstado.datos.inciso} seleccionado.\n\n💰 **Paso 5:** ¿Cuál es el IMPORTE de la multa en CUP?`, false);
             chatEstado.paso = "esperando_cuantia";
         }
     }
@@ -989,21 +953,48 @@
     function chatbotProcesarRespuesta(respuesta) {
         mostrarTyping(() => {
             switch (chatEstado.paso) {
+                case "esperando_fecha":
+                    if (respuesta.match(/^\d{2}\/\d{2}$/)) {
+                        chatEstado.datos.fecha = respuesta;
+                        agregarMensajeChatbot(`✅ Fecha: ${respuesta}\n\n🎫 **Paso 2:** ¿NÚMERO DE BOLETA? (formato CB + 6 dígitos)`, false, [
+                            { texto: "Generar automático", accion: "chatbotGenerarBoleta" }
+                        ]);
+                        chatEstado.paso = "esperando_boleta";
+                    } else {
+                        agregarMensajeChatbot(`Formato incorrecto. Usa DD/MM (ej: 27/04):`, false);
+                    }
+                    break;
+                    
+                case "esperando_boleta":
+                    if (respuesta.match(/^CB\d{6}$/i)) {
+                        chatEstado.datos.boleta = respuesta.toUpperCase();
+                        agregarMensajeChatbot(`✅ Boleta: ${respuesta.toUpperCase()}\n\n⚖️ **Paso 3:** ¿Cuál es el DECRETO?`, false, [
+                            { texto: "Decreto 18", accion: "chatbotSeleccionarDecreto('18')" },
+                            { texto: "Decreto 87", accion: "chatbotSeleccionarDecreto('87')" },
+                            { texto: "Decreto 91", accion: "chatbotSeleccionarDecreto('91')" },
+                            { texto: "Decreto 272", accion: "chatbotSeleccionarDecreto('272')" }
+                        ]);
+                        chatEstado.paso = "esperando_decreto";
+                    } else {
+                        agregarMensajeChatbot(`Formato incorrecto. La boleta debe ser CB más 6 dígitos (ej: CB542068):`, false);
+                    }
+                    break;
+                    
                 case "esperando_cuantia":
                     let cuantia = parseFloat(respuesta.replace(/[^0-9.-]/g, ''));
                     if (!isNaN(cuantia) && cuantia > 0) {
                         chatEstado.datos.cuantia = cuantia;
-                        agregarMensajeChatbot(`💰 Cuantía: $${cuantia}\n\n👤 ¿NOMBRE Y APELLIDOS del infractor?`, false);
+                        agregarMensajeChatbot(`💰 Cuantía: $${cuantia}\n\n👤 **Paso 6:** ¿NOMBRE Y APELLIDOS del infractor?`, false);
                         chatEstado.paso = "esperando_infractor";
                     } else {
-                        agregarMensajeChatbot(`No entendí el monto. Por favor, ingresa el valor numérico de la multa:`, false);
+                        agregarMensajeChatbot(`No entendí el monto. Ingresa el valor numérico:`, false);
                     }
                     break;
                     
                 case "esperando_infractor":
                     if (respuesta.length >= 5) {
                         chatEstado.datos.infractor = respuesta;
-                        agregarMensajeChatbot(`👤 Infractor: ${respuesta}\n\n🆔 ¿NÚMERO DE CARNET DE IDENTIDAD?`, false);
+                        agregarMensajeChatbot(`👤 Infractor: ${respuesta}\n\n🆔 **Paso 7:** ¿NÚMERO DE CARNET DE IDENTIDAD?`, false);
                         chatEstado.paso = "esperando_ci";
                     } else {
                         agregarMensajeChatbot(`Por favor, ingresa el nombre completo:`, false);
@@ -1014,7 +1005,7 @@
                     let ci = respuesta.replace(/[^0-9]/g, '');
                     if (ci.length >= 8) {
                         chatEstado.datos.ci = ci;
-                        agregarMensajeChatbot(`🆔 CI: ${ci}\n\n📍 ¿MUNICIPIO DE RESIDENCIA?`, false, [
+                        agregarMensajeChatbot(`🆔 CI: ${ci}\n\n📍 **Paso 8:** ¿MUNICIPIO DE RESIDENCIA?`, false, [
                             { texto: "Habana Vieja", accion: "chatbotSeleccionarMunicipio('Habana Vieja')" },
                             { texto: "Otro municipio", accion: "chatbotSeleccionarMunicipio('otro')" }
                         ]);
@@ -1044,6 +1035,8 @@
     
     function mostrarResumenChatbot() {
         agregarMensajeChatbot(`📋 **RESUMEN DE LA MULTA**\n\n` +
+            `📅 Fecha: ${chatEstado.datos.fecha}\n` +
+            `🎫 Boleta: ${chatEstado.datos.boleta}\n` +
             `⚖️ Decreto: ${chatEstado.datos.decreto}\n` +
             `📌 Artículo: ${chatEstado.datos.articulo}\n` +
             `✏️ Inciso: ${chatEstado.datos.inciso}\n` +
@@ -1072,8 +1065,8 @@
                     { texto: "🔒 Cerrar chat", accion: "chatbotCerrar" }
                 ]);
                 
-                chatEstado.activo = false;
-                
+                // Actualizar formulario
+                document.getElementById('fecha').value = chatEstado.datos.fecha;
                 document.getElementById('boleta').value = chatEstado.datos.boleta;
                 document.getElementById('decreto').value = chatEstado.datos.decreto;
                 document.getElementById('decreto').dispatchEvent(new Event('change'));
@@ -1091,6 +1084,7 @@
                     }
                 }, 100);
                 
+                chatEstado.activo = false;
             } catch (error) {
                 agregarMensajeChatbot(`❌ Error al registrar. Intenta de nuevo.`, false);
             }
@@ -1117,9 +1111,9 @@
         agregarMensajeChatbot(`📖 **AYUDA RÁPIDA**\n\n` +
             `🔹 Puedes usar el FORMULARIO normal para registrar rápido\n` +
             `🔹 O dime "registrar multa" y te guío paso a paso\n` +
-            `🔹 Decretos: 18, 87, 91, 272\n` +
-            `🔹 El avatar cambia cada 30 segundos\n\n` +
-            `⚠️ **Cuando te pida confirmación, debes responder SÍ o NO**\n\n` +
+            `🔹 Formato de fecha: DD/MM (ej: 27/04)\n` +
+            `🔹 Formato de boleta: CB + 6 dígitos (ej: CB542068)\n` +
+            `🔹 Decretos: 18, 87, 91, 272\n\n` +
             `¿Empezamos?`, false, [
                 { texto: "📝 Registrar multa", accion: "chatbotIniciarRegistro" }
             ]);
@@ -1137,7 +1131,7 @@
                 } else if (msgLower.includes('no') || msgLower.includes('cancelar')) {
                     chatbotCancelarRegistro();
                 } else {
-                    agregarMensajeChatbot(`Por favor, responde con "SÍ" para registrar la multa o "NO" para cancelar.`, false);
+                    agregarMensajeChatbot(`Por favor, responde con "SÍ" para registrar o "NO" para cancelar.`, false);
                 }
             } else {
                 chatbotProcesarRespuesta(mensaje);
@@ -1146,27 +1140,19 @@
             chatbotIniciarRegistro();
         } else if (msgLower.includes('ayuda') || msgLower.includes('cómo')) {
             chatbotMostrarAyuda();
-        } else if (msgLower.includes('hola') || msgLower.includes('buenas')) {
-            const hora = new Date().getHours();
-            let saludo = "¡Hola!";
-            if (hora < 12) saludo = "¡Buenos días!";
-            else if (hora < 19) saludo = "¡Buenas tardes!";
-            else saludo = "¡Buenas noches!";
-            agregarMensajeChatbot(`${saludo} ¿En qué puedo ayudarte?`, false, [
-                { texto: "📝 Registrar multa", accion: "chatbotIniciarRegistro" },
-                { texto: "❓ Ayuda", accion: "chatbotMostrarAyuda" }
-            ]);
         } else {
-            agregarMensajeChatbot(`No entendí. Puedes decirme "registrar multa" o "ayuda".\n\nTambién puedes usar el formulario para registrar más rápido.`, false, [
+            agregarMensajeChatbot(`No entendí. Puedes decirme "registrar multa" o "ayuda".\n\nTambién puedes usar el formulario.`, false, [
                 { texto: "📝 Registrar multa", accion: "chatbotIniciarRegistro" }
             ]);
         }
     }
     
-    // Hacer funciones globales
+    // Funciones globales
     window.iniciarSesion = iniciarSesion;
     window.cerrarSesion = cerrarSesion;
     window.chatbotIniciarRegistro = chatbotIniciarRegistro;
+    window.chatbotUsarFecha = chatbotUsarFecha;
+    window.chatbotGenerarBoleta = chatbotGenerarBoleta;
     window.chatbotSeleccionarDecreto = chatbotSeleccionarDecreto;
     window.chatbotSeleccionarInciso = chatbotSeleccionarInciso;
     window.chatbotSeleccionarMunicipio = chatbotSeleccionarMunicipio;
@@ -1175,7 +1161,6 @@
     window.chatbotCerrar = chatbotCerrar;
     window.chatbotMostrarAyuda = chatbotMostrarAyuda;
     
-    // Intervalo para cambiar avatar solo si el chat está abierto
     setInterval(() => {
         if (chatAbierto) cambiarAvatar();
     }, 30000);
