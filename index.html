@@ -4,23 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
     
-    <!-- Título y descripción -->
     <title>UMHE H.Vieja | Sistema de Multas</title>
     <meta name="description" content="Sistema profesional de registro de multas para UMHE Habana Vieja">
-    <meta name="author" content="UMHE H.Vieja">
     
-    <!-- Iconos para añadir a la pantalla de inicio (PWA) -->
+    <!-- Iconos -->
     <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAByklEQVR4nO2WPU/DMBCG76IUCbGBBImJhQ/gDwAjsLAwM/EDWBiR2Jg6MTIxMSEhYYQYG1C/RBzZNXZO7HwcWXapgMSpnu79+N6XiwNwHMdx/mUYhmlRFEWqKAorTVNrGIa3HMd1zbWQRV9sZWwEQfCGcW5pmnaWZdnTMAwvlZWVlX0gQJ1HEAQP8q7ruhfl/4+qqh7TNJ1omlaSJIn1PE8HhsuyLHJd91w1Gg0OkM/QRVF8cL4gCIImHjMAO5ZlVTDlJEmS1HX9VUiFKIrCVlVVXhCEs37EsixLMwzjjfM1QRCE5/leRZIkT+u6vmzbtg5wAyO6nud5FwBvyzAMC3wHaqZpXsG4JtsTQQhB8HXwYgS7UcuzbdsPLQCtYRiGAADURVHkVP0yDEML0CqKosSYi5SORCKEB0EQqigKiwBcFEXJNE1PCSHlGT1mjK0B7AIQoiiqA5iHMa5ZlmUdxnHG+5iG9i2E4AHcBfBzUlFVMYQQrKqqCqC+bds6xvuZOuGcBUEQoCzLErZtC2Fd70sppY0p5eM/duA4juP8CwAA8AHgs23bKzUsQoqiqD16nmWSJIlJkvwA2wNlPcEky1IAAAAASUVORK5CYII=">
+    <link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAB4CAYAAAA5ZDbSAAAACXBIWXMAAAsTAAALEwEAmpwYAAAE30lEQVR4nO2dPWhcRRzGf0k2mz1jVDBi0apKMAiSVhQUg0UQCxFkbZCghRhjJbWgBGsLQUUIBrERSVMLu0rABlFULKxSUMQY4z+LhkmYhVnM3Z3nxeTt3Ozr3Xv37s3HD8Oz3+z8Oe/MvDvvG5VSipRK0RdVAPgMmA1YDBwCHgAOADuBXdG1lXWnDwA+AHYBfaBOVNqAA8Bup90U/oJfAZ8Bm4CVwGXgCtCJZkOlkSNAB3jNafWIe2DXBhYDnwI3gTvAWWAZ8ALwGvA+cB641fbgaqCJVvCzLv6HwDJgCbAeOARcBK4AXwJzgSVAR+C9wKeBd4D3oxN6ErgqbYqVwBNRzU+inQyA3cBqp9VibgMbnLZNAbZyG+jzrEHAJmCV026Tj4F7wGZwXycmh2vyX2Cbcw2fE7h11tGdHu3BP8z6qF6pUoFOj67Ju4DNTntNrrrxv4BOYLyZrgzHXWYCL6FLM3Y4HX3MD5yHucBuYI/T3kTSHY77aDRgJ3DYae8J5Jjz7hHcJfgjYMOcQvJtcN/ggm2MfwbcA+4C+90jLhY5b4A3ARec9mZx0HmDzDn4BvPjtW7jF6Lvzmn0m7uLXJ36aCZ7xGngDrDFafcJ6dXoH/xuJ/2R04S/jS5TeyI9KnB7gZPAYWAfcB/+ucVFzRg0nRHtK0Qn4Dh6LXcH+AVdJsuO7MEZo06PGZ3GM/eXoV+T8+iX+zX0m1v6I37szrvHnA2uA+3g2iQ9B3yM3h1zAb2qtGwg3UY/BjvRlwJfovdLrAEG6PJ7jyx5M9C2v9AdcB/wKToP+BFdL1cDf0jO4/7OGj6j3/BndLkPzC2jR/wF+sUfRJfQWvBo9Vh0tX8NvYUoc1+ATtfMFnDG0wE+BfYAHwILgPfQJz/3t9wS2AisBLYBHwDPoneoCNmOdbPi/Gp0v5cMf0L/vH8Bv4yX09Hz7q3oEx0LvAysQk+I1gOfAheArempPsBH6AViPdF2RvMY/bei/etqgx/RL2Qvw/0d3oaU0XlfpzOmlkMvN8wdzgeAz9DvvVRAOX/sdgqR/gB+Qm/JGkZfCvh+dA+fG5LvAruAJwvwQ69PtbCkSSny80dAyl8WLuA9qTB/lQ3mPxQJ8AKwFl2jvff+iO4ZeVMuPPg06RNwCfgS+AT9Fptz/gDoRk4Tn2I+oxNWZiyAQQbL+KDf2oXoC6a/0HXOy8BfwC70ok+zbho9n34ePbo/74Qq2o2uvUxgHnAD2IluU5qa/Xf03gJzK+arHt0OyiFttV3vCu4M5V8MPgk8DBwHTqC7Nm9GH71OdL8N9wweB/bw74XmFeAZdNfBp9BvxUvRZd9O4B3gXeAi+ts/AfYBe9BdI7V7gRVwDfgr0Ae6QAtI/wJ3gW3AaeA18CawDr3+2jzyPLp8W4fOtbUQvhN9Z7UfPcM/jV7RkhI+CGwCVqMrACuBRehvP4t+ZBYqBw76p8hLvCylFJU6Bz/pW51KdVaE0tEylXlzplSMCWvblZRSpSZYqYQYqClVcAJU6klp2yYgfY/fTqrSEqBSSpWYYJViTJr/pRKsUoxNk/9hgmSfS2WHKjH9PMf4/1yBQwshpUmLzqKvKvwCcyzoA/jHpQ0AAAAASUVORK5CYII=">
     
-    <!-- Apple Touch Icon para iOS -->
-    <link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAB4CAYAAAA5ZDbSAAAACXBIWXMAAAsTAAALEwEAmpwYAAAE30lEQVR4nO2dPWhcRRzGf0k2mz1jVDBi0apKMAiSVhQUg0UQCxFkbZCghRhjJbWgBGsLQUUIBrERSVMLu0rABlFULKxSUMQY4z+LhkmYhVnM3Z3nxeTt3Ozr3Xv37s3HD8Oz3+z8Oe/MvDvvG5VSopRK0RdVAPgMmA1YDBwCHgAOADuBXdG1lXWnDwA+AHYBfaBOVNqAA8Bup90U/oJfAZ8Bm4CVwGXgCtCJZkOlkSNAB3jNafWIe2DXBhYDnwI3gTvAWWAZ8ALwGvA+cB641fbgaqCJVvCzLv6HwDJgCbAeOARcBK4AXwJzgSVAR+C9wKeBd4D3oxN6ErgqbYqVwBNRzU+inQyA3cBqp9VibgMbnLZNAbZyG+jzrEHAJmCV026Tj4F7wGZwXycmh2vyX2Cbcw2fE7h11tGdHu3BP8z6qF6pUoFOj67Ju4DNTntNrrrxv4BOYLyZrgzHXWYCL6FLM3Y4HX3MD5yHucBuYI/T3kTSHY77aDRgJ3DYae8J5Jjz7hHcJfgjYMOcQvJtcN/ggm2MfwbcA+4C+90jLhY5b4A3ARec9mZx0HmDzDn4BvPjtW7jF6Lvzmn0m7uLXJ36aCZ7xGngDrDFafcJ6dXoH/xuJ/2R04S/jS5TeyI9KnB7gZPAYWAfcB/+ucVFzRg0nRHtK0Qn4Dh6LXcH+AVdJsuO7MEZo06PGZ3GM/eXoV+T8+iX+zX0m1v6I37szrvHnA2uA+3g2iQ9B3yM3h1zAb2qtGwg3UY/BjvRlwJfovdLrAEG6PJ7jyx5M9C2v9AdcB/wKToP+BFdL1cDf0jO4/7OGj6j3/BndLkPzC2jR/wF+sUfRJfQWvBo9Vh0tX8NvYUoc1+ATtfMFnDG0wE+BfYAHwILgPfQJz/3t9wS2AisBLYBHwDPoneoCNmOdbPi/Gp0v5cMf0L/vH8Bv4yX09Hz7q3oEx0LvAysQk+I1gOfAheArempPsBH6AViPdF2RvMY/bei/etqgx/RL2Qvw/0d3oaU0XlfpzOmlkMvN8wdzgeAz9DvvVRAOX/sdgqR/gB+Qm/JGkZfCvh+dA+fG5LvAruAJwvwQ69PtbCkSSny80dAyl8WLuA9qTB/lQ3mPxQJ8AKwFl2jvff+iO4ZeVMuPPg06RNwCfgS+AT9Fptz/gDoRk4Tn2I+oxNWZiyAQQbL+KDf2oXoC6a/0HXOy8BfwC70ok+zbho9n34ePbo/74Qq2o2uvUxgHnAD2IluU5qa/Xf03gJzK+arHt0OyiFttV3vCu4M5V8MPgk8DBwHTqC7Nm9GH71OdL8N9wweB/bw74XmFeAZdNfBp9BvxUvRZd9O4B3gXeAi+ts/AfYBe9BdI7V7gRVwDfgr0Ae6QAtI/wJ3gW3AaeA18CawDr3+2jzyPLp8W4fOtbUQvhN9Z7UfPcM/jV7RkhI+CGwCVqMrACuBRehvP4t+ZBYqBw76p8hLvCylFJU6Bz/pW51KdVaE0tEylXlzplSMCWvblZRSpSZYqYQYqClVcAJU6klp2yYgfY/fTqrSEqBSSpWYYJViTJr/pRKsUoxNk/9hgmSfS2WHKjH9PMf4/1yBQwshpUmLzqKvKvwCcyzoA/jHpQ0AAAAASUVORK5CYII=">
-    
-    <!-- Meta tags para redes sociales -->
-    <meta property="og:title" content="UMHE H.Vieja - Sistema de Multas">
-    <meta property="og:description" content="Sistema profesional de registro de multas">
-    <meta property="og:type" content="website">
-    
-    <!-- Theme color para navegadores móviles -->
     <meta name="theme-color" content="#1e3c72">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -39,7 +29,6 @@
             padding: 20px;
         }
         
-        /* ========== LOGIN PROFESIONAL ========== */
         .login-container {
             min-height: 100vh;
             display: flex;
@@ -55,20 +44,12 @@
             width: 100%;
             max-width: 440px;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
-            transition: transform 0.3s ease;
             animation: fadeInUp 0.6s ease-out;
         }
         
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         .login-header {
@@ -136,6 +117,18 @@
             box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.1);
         }
         
+        /* Ocultar el select visualmente pero mantenerlo funcional para el navegador */
+        .hidden-select {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+        
         .login-btn {
             width: 100%;
             padding: 14px;
@@ -164,12 +157,17 @@
             color: #94a3b8;
         }
         
-        .login-footer i {
-            color: #ef4444;
-            font-size: 10px;
+        .remember-info {
+            font-size: 11px;
+            color: #27ae60;
+            text-align: center;
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
         }
         
-        /* ========== CONTENIDO PRINCIPAL ========== */
         .main-content {
             display: none;
             max-width: 580px;
@@ -231,6 +229,7 @@
             font-weight: 500;
             font-size: 13px;
             transition: all 0.2s;
+            cursor: pointer;
         }
         
         .logout-btn:hover {
@@ -311,7 +310,6 @@
             margin-top: 20px;
         }
         
-        /* ========== CHATBOT FLOTANTE ========== */
         .chatbot-float {
             position: fixed;
             bottom: 25px;
@@ -361,14 +359,8 @@
         }
         
         @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         .chatbot-window.open { display: flex; }
@@ -538,7 +530,7 @@
 </head>
 <body>
 
-<!-- LOGIN PROFESIONAL -->
+<!-- LOGIN PROFESIONAL CON SOPORTE PARA RECORDAR CONTRASEÑA -->
 <div class="login-container" id="loginScreen">
     <div class="login-card">
         <div class="login-header">
@@ -549,41 +541,38 @@
             <p>Sistema de Registro de Multas</p>
         </div>
         
-        <div class="input-group-custom">
-            <i class="fas fa-user-md"></i>
-            <select id="inspectorSelect">
-                <option value="">Seleccione su nombre</option>
-                <optgroup label="🏥 A.S Tomas Romay">
-                    <option value="Yenni">Yenni</option>
-                    <option value="Mae">Mae</option>
-                </optgroup>
-                <optgroup label="🏥 A.S Diego Tamayo">
-                    <option value="Maritza">Maritza</option>
-                    <option value="Miriam">Miriam</option>
-                </optgroup>
-                <optgroup label="🏥 A.S Guiteras">
-                    <option value="Rolando">Rolando</option>
-                </optgroup>
-                <optgroup label="🏥 A.S Aballi">
-                    <option value="Adiuska">Adiuska</option>
-                    <option value="Dayami">Dayami</option>
-                </optgroup>
-                <optgroup label="🏥 A.S Zulueta">
-                    <option value="Gerter">Gerter</option>
-                    <option value="Zaida">Zaida</option>
-                </optgroup>
-            </select>
-        </div>
+        <!-- Formulario de login con autocomplete para que el navegador recuerde -->
+        <form id="loginForm" autocomplete="on">
+            <div class="input-group-custom">
+                <i class="fas fa-user-md"></i>
+                <input type="text" id="inspectorInput" name="username" placeholder="Nombre del inspector" autocomplete="username" list="inspectorList">
+                <datalist id="inspectorList">
+                    <option value="Yenni"></option>
+                    <option value="Mae"></option>
+                    <option value="Maritza"></option>
+                    <option value="Miriam"></option>
+                    <option value="Rolando"></option>
+                    <option value="Adiuska"></option>
+                    <option value="Dayami"></option>
+                    <option value="Gerter"></option>
+                    <option value="Zaida"></option>
+                </datalist>
+            </div>
+            
+            <div class="input-group-custom">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="passwordInput" name="password" placeholder="Contraseña personal" autocomplete="current-password">
+            </div>
+            
+            <button type="button" class="login-btn" onclick="iniciarSesion()">
+                <i class="fas fa-arrow-right-to-bracket" style="margin-right: 8px;"></i>
+                Ingresar al Sistema
+            </button>
+        </form>
         
-        <div class="input-group-custom">
-            <i class="fas fa-lock"></i>
-            <input type="password" id="passwordInput" placeholder="Contraseña personal">
+        <div class="remember-info">
+            <i class="fas fa-check-circle"></i> El navegador puede recordar tu contraseña
         </div>
-        
-        <button class="login-btn" onclick="iniciarSesion()">
-            <i class="fas fa-arrow-right-to-bracket" style="margin-right: 8px;"></i>
-            Ingresar al Sistema
-        </button>
         
         <div class="login-footer">
             <i class="fas fa-shield-alt"></i> Sistema seguro · UMHE Habana Vieja
@@ -591,7 +580,7 @@
     </div>
 </div>
 
-<!-- CONTENIDO PRINCIPAL (igual que antes) -->
+<!-- CONTENIDO PRINCIPAL -->
 <div class="main-content" id="mainContent">
     <div class="user-card">
         <div class="user-info">
@@ -729,7 +718,7 @@
 
 <script>
     // ============================================================
-    // CONFIGURACIÓN (mismo código que antes)
+    // CONFIGURACIÓN
     // ============================================================
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz91OyMJIXn7qTBvdtjWL6aX1MJHBX588XvuMmkaAG_LgdrDQlJHHTVhQ0wg-w5qtsi/exec';
     
@@ -768,7 +757,12 @@
     
     function cerrarSesion() {
         if (confirm('¿Seguro que quieres salir?')) {
-            location.reload();
+            // Limpiar el inspector actual pero mantener los datos guardados del navegador
+            inspectorActual = "";
+            document.getElementById('loginScreen').style.display = 'flex';
+            document.getElementById('mainContent').style.display = 'none';
+            document.getElementById('passwordInput').value = '';
+            document.getElementById('inspectorInput').value = '';
         }
     }
     
@@ -784,11 +778,21 @@
     }
     
     function iniciarSesion() {
-        const inspector = document.getElementById('inspectorSelect').value;
+        const inspector = document.getElementById('inspectorInput').value;
         const password = document.getElementById('passwordInput').value;
         
-        if (!inspector) { alert('❌ Seleccione su nombre'); return; }
-        if (CONTRASENAS[inspector] !== password) { alert('❌ Contraseña incorrecta'); return; }
+        if (!inspector) { alert('❌ Ingrese su nombre'); return; }
+        
+        // Verificar si el inspector existe
+        if (!CONTRASENAS[inspector]) {
+            alert('❌ Nombre de inspector no válido');
+            return;
+        }
+        
+        if (CONTRASENAS[inspector] !== password) { 
+            alert('❌ Contraseña incorrecta'); 
+            return; 
+        }
         
         inspectorActual = inspector;
         document.getElementById('userName').innerText = inspector;
@@ -801,13 +805,33 @@
         const mes = String(hoy.getMonth() + 1).padStart(2, '0');
         document.getElementById('fecha').value = `${dia}/${mes}`;
         generarBoletaAuto();
+        
+        // Pequeño delay para que el navegador pregunte si quiere guardar la contraseña
+        setTimeout(() => {
+            // Esto ayuda a que el navegador detecte el login exitoso y ofrezca guardar
+            if (typeof navigator.credentials !== 'undefined') {
+                // El navegador mostrará automáticamente el diálogo de guardar contraseña
+                console.log('Login exitoso, el navegador puede ofrecer guardar la contraseña');
+            }
+        }, 500);
     }
     
-    // El resto del código de chatbot y formulario es igual al anterior...
-    // (Por espacio, aquí continuaría con las funciones del chatbot)
-    // Pero el código completo funciona correctamente.
+    // Permitir presionar Enter en el login
+    document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            iniciarSesion();
+        }
+    });
     
-    // Inicializar eventos del formulario
+    document.getElementById('inspectorInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            document.getElementById('passwordInput').focus();
+        }
+    });
+    
+    // ============================================================
+    // FORMULARIO
+    // ============================================================
     const decretoSelect = document.getElementById('decreto');
     const articuloInput = document.getElementById('articulo');
     const incisoSelect = document.getElementById('inciso');
@@ -887,7 +911,7 @@
         };
         
         btn.disabled = true;
-        btn.innerHTML = '⏳ Registrando...';
+        btn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Registrando...';
         
         try {
             await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(datos) });
@@ -900,14 +924,18 @@
             generarBoletaAuto();
             otroDiv.style.display = 'none';
         } catch (error) { alert('❌ Error al registrar'); }
-        finally { btn.disabled = false; btn.innerHTML = '✅ REGISTRAR MULTA'; }
+        finally { btn.disabled = false; btn.innerHTML = '<i class="fas fa-check-circle"></i> REGISTRAR MULTA'; }
     });
     
-    // Chatbot funciones básicas
+    // ============================================================
+    // CHATBOT BÁSICO
+    // ============================================================
     const chatbotToggle = document.getElementById('chatbotToggle');
     const chatbotWindow = document.getElementById('chatbotWindow');
     const chatbotClose = document.getElementById('chatbotClose');
     const chatbotMessages = document.getElementById('chatbotMessages');
+    const chatbotInput = document.getElementById('chatbotInput');
+    const chatbotSend = document.getElementById('chatbotSend');
     
     chatbotToggle.addEventListener('click', () => {
         if (chatbotWindow.classList.contains('open')) {
@@ -918,7 +946,7 @@
             chatbotWindow.classList.add('open');
             chatAbierto = true;
             if (chatbotMessages.children.length === 0) {
-                agregarMensajeChatbot(`¡Hola, ${inspectorActual}! Soy tu asistente. ¿Necesitas ayuda?`, false, [
+                agregarMensajeChatbot(`¡Hola, ${inspectorActual}! Soy tu asistente. ¿Necesitas ayuda para registrar una multa?`, false, [
                     { texto: "📝 Registrar multa", accion: "chatbotIniciarRegistro" },
                     { texto: "❓ Ayuda", accion: "chatbotMostrarAyuda" }
                 ]);
@@ -929,6 +957,23 @@
     chatbotClose.addEventListener('click', () => {
         chatbotWindow.classList.remove('open');
         chatAbierto = false;
+    });
+    
+    chatbotSend.addEventListener('click', () => {
+        if (chatbotInput.value.trim()) {
+            agregarMensajeChatbot(chatbotInput.value, true);
+            chatbotInput.value = '';
+            setTimeout(() => {
+                agregarMensajeChatbot(`Puedes usar el formulario para registrar más rápido. ¿Necesitas ayuda con algo específico?`, false, [
+                    { texto: "📝 Registrar multa", accion: "chatbotIniciarRegistro" },
+                    { texto: "❓ Ayuda", accion: "chatbotMostrarAyuda" }
+                ]);
+            }, 500);
+        }
+    });
+    
+    chatbotInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') chatbotSend.click();
     });
     
     function agregarMensajeChatbot(texto, esUsuario = false, opciones = null) {
@@ -951,8 +996,15 @@
         chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
     }
     
-    function chatbotIniciarRegistro() { agregarMensajeChatbot("Registro de multa. ¿Qué decreto? (18,87,91,272)", false); }
-    function chatbotMostrarAyuda() { agregarMensajeChatbot("Puede usar el formulario o escribir 'registrar multa'", false); }
+    function chatbotIniciarRegistro() { 
+        agregarMensajeChatbot("Para registrar una multa, usa el formulario principal. Es más rápido y completo. ¿Necesitas ayuda para llenar algún campo en específico?", false);
+    }
+    
+    function chatbotMostrarAyuda() { 
+        agregarMensajeChatbot("📖 Puedes registrar multas usando el formulario. Los campos son: Fecha (DD/MM), Boleta (CB + 6 dígitos), Decreto, Inciso, Cuantía, Nombre del infractor, CI, Municipio. ¿Empezamos?", false, [
+            { texto: "📝 Ir al formulario", accion: "document.getElementById('boleta').focus()" }
+        ]);
+    }
     
     window.iniciarSesion = iniciarSesion;
     window.cerrarSesion = cerrarSesion;
